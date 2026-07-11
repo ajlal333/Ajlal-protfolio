@@ -1118,6 +1118,11 @@ h1 {
   font-weight: 750;
 }
 
+.form-status[data-tone="warning"] {
+  color: #8a5a00;
+  font-weight: 750;
+}
+
 @keyframes marquee {
   from {
     transform: translateX(0);

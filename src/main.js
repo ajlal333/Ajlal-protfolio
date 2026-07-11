@@ -293,6 +293,7 @@ bookingForm?.addEventListener('submit', async (event) => {
 
   const submitButton = bookingForm.querySelector('button[type="submit"]');
   const payload = Object.fromEntries(new FormData(bookingForm).entries());
+  const isLocalPreview = ['localhost', '127.0.0.1'].includes(window.location.hostname);
 
   if (payload.companyFax) return;
 
@@ -307,14 +308,20 @@ bookingForm?.addEventListener('submit', async (event) => {
     });
 
     if (!response.ok) {
-      throw new Error('Booking email service unavailable');
+      const details = await response.json().catch(() => ({}));
+      throw new Error(details.error || 'Booking email service unavailable');
     }
 
     bookingForm.reset();
     setFormStatus('Request sent. I will reply with call details soon.', 'success');
   } catch (error) {
     window.location.href = buildFallbackMailto(payload);
-    setFormStatus('Your email app should open with the request ready to send.', 'neutral');
+    setFormStatus(
+      isLocalPreview
+        ? 'Local preview cannot send email through Vercel functions. Your email app should open with the request ready to send.'
+        : 'Email service is not available yet. Your email app should open with the request ready to send.',
+      'warning'
+    );
   } finally {
     submitButton.disabled = false;
   }
