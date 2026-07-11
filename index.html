@@ -23,8 +23,9 @@
           <a href="#work">Work</a>
           <a href="#process">Process</a>
           <a href="#faq">FAQ</a>
+          <a href="./Ajlal_Resume.pdf" target="_blank" rel="noreferrer">Resume</a>
         </div>
-        <a class="nav-cta" href="mailto:ajlalgoraya333@gmail.com">Start a project</a>
+        <button class="nav-cta" type="button" data-open-booking>Start a project</button>
       </div>
     </nav>
 
@@ -39,10 +40,10 @@
             clear ownership from discovery to deployment.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="mailto:ajlalgoraya333@gmail.com">
+            <button class="button primary" type="button" data-open-booking>
               Discuss your workflow
               <span class="arrow-dot">-></span>
-            </a>
+            </button>
             <a class="button ghost" href="#work">See business outcomes</a>
           </div>
         </section>
@@ -315,11 +316,11 @@
         <h2>Ready to turn a manual workflow into an AI system?</h2>
         <p>Share the workflow, the data, and the result your business needs.</p>
         <div class="hero-actions centered-actions">
-          <a class="button primary" href="mailto:ajlalgoraya333@gmail.com">
+          <button class="button primary" type="button" data-open-booking>
             Start your AI project
             <span class="arrow-dot">-></span>
-          </a>
-          <a class="button ghost" href="/Ajlal_Resume.pdf" target="_blank" rel="noreferrer">
+          </button>
+          <a class="button ghost" href="./Ajlal_Resume.pdf" target="_blank" rel="noreferrer">
             View technical background
           </a>
         </div>
@@ -327,6 +328,78 @@
     </main>
 
     <footer class="footer-wordmark">Ajlal AI</footer>
+
+    <dialog class="booking-dialog" id="booking-dialog" aria-labelledby="booking-title">
+      <div class="booking-panel">
+        <button class="booking-close" type="button" data-close-booking aria-label="Close booking form">x</button>
+        <div class="booking-intro">
+          <p class="eyebrow">Book a strategy call</p>
+          <h2 id="booking-title">Tell me what your business wants to automate.</h2>
+          <p>
+            Share the workflow, the data sources, and a preferred call window.
+            I will review it and reply with next steps.
+          </p>
+        </div>
+
+        <form class="booking-form" id="booking-form">
+          <div class="form-grid">
+            <label>
+              <span>Name</span>
+              <input name="name" type="text" autocomplete="name" required />
+            </label>
+            <label>
+              <span>Work email</span>
+              <input name="email" type="email" autocomplete="email" required />
+            </label>
+            <label>
+              <span>Company</span>
+              <input name="company" type="text" autocomplete="organization" required />
+            </label>
+            <label>
+              <span>Website</span>
+              <input name="website" type="url" autocomplete="url" placeholder="https://" />
+            </label>
+            <label>
+              <span>AI need</span>
+              <select name="service" required>
+                <option value="">Select one</option>
+                <option>Workflow automation</option>
+                <option>Data extraction</option>
+                <option>AI platform/backend</option>
+                <option>Not sure yet</option>
+              </select>
+            </label>
+            <label>
+              <span>Preferred call window</span>
+              <input name="callWindow" type="text" placeholder="Tue 3 PM PKT / EST morning" required />
+            </label>
+          </div>
+
+          <label>
+            <span>What should the AI system help with?</span>
+            <textarea
+              name="message"
+              rows="5"
+              placeholder="Example: We spend 8 hours/week copying invoice data into spreadsheets..."
+              required
+            ></textarea>
+          </label>
+
+          <label class="honeypot" aria-hidden="true">
+            <span>Leave this field empty</span>
+            <input name="companyFax" type="text" tabindex="-1" autocomplete="off" />
+          </label>
+
+          <div class="booking-actions">
+            <button class="button primary" type="submit">
+              Request call
+              <span class="arrow-dot">-></span>
+            </button>
+            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </dialog>
 
     <script type="module" src="/src/main.js"></script>
   </body>

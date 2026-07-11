@@ -41,6 +41,10 @@ button {
   font: inherit;
 }
 
+body.modal-open {
+  overflow: hidden;
+}
+
 #webgl {
   position: fixed;
   top: 118px;
@@ -172,9 +176,11 @@ body.scrolled .nav-links a {
   min-height: 52px;
   padding: 0 30px;
   overflow: hidden;
+  border: 0;
   color: var(--white);
   background: var(--ink);
   border-radius: 999px;
+  cursor: pointer;
   font-size: 18px;
   font-weight: 750;
   transition:
@@ -274,12 +280,20 @@ h1 {
   gap: 12px;
   padding: 0 18px 0 28px;
   overflow: hidden;
+  border: 0;
   border-radius: 999px;
+  cursor: pointer;
   font-weight: 750;
   transition:
     transform 250ms ease,
     box-shadow 250ms ease,
     border-color 250ms ease;
+}
+
+.button:disabled {
+  cursor: wait;
+  opacity: 0.68;
+  transform: none;
 }
 
 .button.primary {
@@ -952,6 +966,158 @@ h1 {
   text-align: center;
 }
 
+.booking-dialog {
+  width: min(1120px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  padding: 0;
+  overflow: auto;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+}
+
+.booking-dialog::backdrop {
+  background: rgba(24, 24, 24, 0.42);
+  backdrop-filter: blur(10px);
+}
+
+.booking-panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: 0.88fr 1.12fr;
+  gap: 24px;
+  padding: 24px;
+  background: var(--cream);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 32px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.22);
+}
+
+.booking-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 2;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  color: var(--white);
+  background: var(--ink);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.booking-intro {
+  display: flex;
+  min-height: 520px;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 30px;
+  color: var(--white);
+  background: var(--nav);
+  border-radius: 24px;
+}
+
+.booking-intro h2 {
+  max-width: 420px;
+  margin-bottom: 16px;
+  font-size: clamp(2.25rem, 4vw, 4.1rem);
+  line-height: 1;
+  letter-spacing: -2px;
+}
+
+.booking-intro p:not(.eyebrow) {
+  max-width: 420px;
+  margin-bottom: 0;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.booking-form {
+  display: grid;
+  align-content: center;
+  gap: 18px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.booking-form label {
+  display: grid;
+  gap: 8px;
+}
+
+.booking-form label span {
+  color: #343434;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  outline: none;
+  font: inherit;
+  transition:
+    border-color 200ms ease,
+    box-shadow 200ms ease,
+    background 200ms ease;
+}
+
+.booking-form textarea {
+  min-height: 136px;
+  padding-top: 14px;
+  resize: vertical;
+}
+
+.booking-form input:focus,
+.booking-form select:focus,
+.booking-form textarea:focus {
+  background: #ffffff;
+  border-color: rgba(44, 111, 255, 0.56);
+  box-shadow: 0 0 0 4px rgba(44, 111, 255, 0.12);
+}
+
+.honeypot {
+  position: absolute;
+  left: -9999px;
+}
+
+.booking-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+
+.form-status {
+  flex: 1 1 260px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.form-status[data-tone="success"] {
+  color: #147a5c;
+  font-weight: 750;
+}
+
 @keyframes marquee {
   from {
     transform: translateX(0);
@@ -1100,6 +1266,36 @@ h1 {
 
   .app-window {
     border-radius: 24px;
+  }
+
+  .booking-panel {
+    grid-template-columns: 1fr;
+    padding: 14px;
+    border-radius: 24px;
+  }
+
+  .booking-close {
+    top: 24px;
+    right: 24px;
+  }
+
+  .booking-intro {
+    min-height: auto;
+    padding: 68px 22px 24px;
+    border-radius: 18px;
+  }
+
+  .booking-intro h2 {
+    letter-spacing: -1.2px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-actions,
+  .booking-actions .button {
+    width: 100%;
   }
 
   .mini-metrics,
