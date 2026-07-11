@@ -65,7 +65,7 @@ export default async function handler(req, res) {
   }
 
   const toEmail = process.env.BOOKING_TO_EMAIL || DEFAULT_TO_EMAIL;
-  const fromEmail = process.env.BOOKING_FROM_EMAIL || 'Ajlal AI <onboarding@resend.dev>';
+  const fromEmail = process.env.BOOKING_FROM_EMAIL || 'LogicFolds <onboarding@resend.dev>';
   const subject = `New AI strategy call request: ${lead.company}`;
   const text = [
     'New AI strategy call request',
