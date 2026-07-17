@@ -37,20 +37,17 @@ const solutionCopy = {
   automation: {
     color: palette.blue,
     title: 'AI automation for business operations',
-    copy:
-      'Convert repeatable internal work into AI-assisted workflows with prompts, structured outputs, APIs, and human review.',
+    copy: 'Turn repeatable work into AI workflows with APIs and review points.',
   },
   extraction: {
     color: palette.amber,
     title: 'Structured data from messy sources',
-    copy:
-      'Use agentic browsing, semantic analysis, and recovery logic to turn websites, documents, and public data into usable business records.',
+    copy: 'Extract web, document, and audio data into clean records.',
   },
   platform: {
     color: palette.mint,
     title: 'Production AI platforms',
-    copy:
-      'Launch FastAPI services for model inference, async jobs, file processing, access control, observability, and ongoing iteration.',
+    copy: 'Launch model services with jobs, auth, files, and monitoring.',
   },
 };
 
@@ -318,7 +315,7 @@ bookingForm?.addEventListener('submit', async (event) => {
     window.location.href = buildFallbackMailto(payload);
     setFormStatus(
       isLocalPreview
-        ? 'Local preview cannot send email through Vercel functions. Your email app should open with the request ready to send.'
+        ? 'Local preview cannot send email through Netlify Functions. Your email app should open with the request ready to send.'
         : 'Email service is not available yet. Your email app should open with the request ready to send.',
       'warning'
     );

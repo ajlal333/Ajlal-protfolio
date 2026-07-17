@@ -37,9 +37,8 @@
           <p class="eyebrow">AI solutions for business operations</p>
           <h1>We build practical AI systems that save teams time.</h1>
           <p class="lede">
-            LogicFolds helps businesses automate manual workflows, extract messy
-            web and document data, and launch production-ready AI backends with
-            clear ownership from discovery to deployment.
+            LogicFolds turns repetitive workflows, messy data, and AI ideas into
+            useful software your team can actually run.
           </p>
           <div class="hero-actions">
             <button class="button primary" type="button" data-open-booking>
@@ -62,17 +61,17 @@
               <button class="workflow-step active" data-solution="automation">
                 <span>01</span>
                 <strong>Automate operations</strong>
-                <small>LLM workflows for repetitive business tasks</small>
+                <small>LLM workflows with review steps</small>
               </button>
               <button class="workflow-step" data-solution="extraction">
                 <span>02</span>
                 <strong>Structure messy data</strong>
-                <small>Agentic scraping and semantic extraction</small>
+                <small>Web, document, and audio pipelines</small>
               </button>
               <button class="workflow-step" data-solution="platform">
                 <span>03</span>
                 <strong>Deploy AI platforms</strong>
-                <small>FastAPI, auth, jobs, monitoring, and Docker</small>
+                <small>APIs, dashboards, auth, and Docker</small>
               </button>
             </div>
             <div class="dashboard-card">
@@ -113,53 +112,41 @@
       <section class="section services" id="services">
         <div class="section-head">
           <p class="eyebrow">What we build</p>
-          <h2>AI products that fit real business workflows.</h2>
-          <p>
-            Not demos. Not loose prototypes. We scope the business problem,
-            build the service layer, and deliver software that teams can use.
-          </p>
+          <h2>Small teams. Real systems. Clear outcomes.</h2>
+          <p>We build the AI layer, the backend, and the operating workflow.</p>
         </div>
 
         <div class="service-grid">
           <article class="service-card featured" data-solution="automation">
             <span class="card-icon">AI</span>
             <h3>Workflow automation</h3>
-            <p>
-              Automate internal operations with LLM workflows, structured
-              outputs, approvals, notifications, and auditable API services.
-            </p>
+            <p>Turn repeatable work into API-backed AI workflows.</p>
             <ul>
-              <li>Prompt and retrieval design</li>
-              <li>Human-in-the-loop validation</li>
-              <li>FastAPI workflow services</li>
+              <li>Approvals</li>
+              <li>Notifications</li>
+              <li>Audit trails</li>
             </ul>
           </article>
 
           <article class="service-card" data-solution="extraction">
             <span class="card-icon">DX</span>
             <h3>Data extraction systems</h3>
-            <p>
-              Turn unstructured web pages, menus, documents, and public sources
-              into clean JSON and database-ready business data.
-            </p>
+            <p>Convert unstructured sources into usable business records.</p>
             <ul>
-              <li>AgentQL and Playwright agents</li>
-              <li>Semantic classification</li>
-              <li>Error recovery pipelines</li>
+              <li>Web data</li>
+              <li>Documents</li>
+              <li>Audio</li>
             </ul>
           </article>
 
           <article class="service-card" data-solution="platform">
             <span class="card-icon">ML</span>
             <h3>AI-ready platforms</h3>
-            <p>
-              Build backend infrastructure for model inference, long-running AI
-              jobs, file processing, access control, and performance tracking.
-            </p>
+            <p>Ship the platform around the model, not just the prompt.</p>
             <ul>
-              <li>Async APIs and WebSockets</li>
-              <li>Dockerized deployments</li>
-              <li>Monitoring and iteration loops</li>
+              <li>FastAPI</li>
+              <li>Auth</li>
+              <li>Docker</li>
             </ul>
           </article>
         </div>
@@ -168,66 +155,110 @@
       <section class="section work" id="work">
         <div class="section-head centered">
           <p class="eyebrow">Selected work</p>
-          <h2>Business problems solved with production AI engineering.</h2>
+          <h2>Client-ready builds with real product surfaces.</h2>
         </div>
 
-        <div class="project-grid">
-          <article class="project-card" data-project="menu-ai">
-            <div class="project-visual">
-              <div class="mock-browser">
-                <div></div>
-                <div></div>
-                <div></div>
+        <div class="case-study-grid">
+          <article class="case-card featured-case">
+            <div class="case-copy">
+              <span class="case-kicker">Resource assistant</span>
+              <h3>AuraAI</h3>
+              <p>Dockerized knowledge assistant for resource-center workflows.</p>
+              <div class="result-row">
+                <span><strong>2</strong> compose files</span>
+                <span><strong>React</strong> frontend</span>
+                <span><strong>FastAPI</strong> backend</span>
               </div>
-              <div class="data-lines">
-                <span></span><span></span><span></span><span></span>
-              </div>
-              <div class="project-overlay">
-                <h3>AI menu data collection</h3>
-                <p>Agentic extraction for restaurant intelligence.</p>
-              </div>
+              <a href="https://github.com/ajlal333/AuraAI" target="_blank" rel="noreferrer">View repository</a>
             </div>
-            <div class="project-meta">
-              <span>Data extraction</span>
-              <strong>LLMs, AgentQL, Playwright, browser-use</strong>
-            </div>
-          </article>
-
-          <article class="project-card" data-project="onex">
-            <div class="project-visual teal">
-              <div class="pipeline-diagram">
-                <span>FASTQ</span>
-                <span>API</span>
-                <span>Jobs</span>
-                <span>Insights</span>
+            <div class="case-screen aura-screen" aria-label="AuraAI product screenshot mockup">
+              <div class="screen-top"><span></span><span></span><span></span><strong>AuraAI</strong></div>
+              <div class="assistant-layout">
+                <aside>
+                  <b>Sources</b>
+                  <span>SharePoint docs</span>
+                  <span>Resource FAQs</span>
+                  <span>Team notes</span>
+                </aside>
+                <div class="assistant-main">
+                  <div class="chat-bubble user">Find the latest onboarding policy.</div>
+                  <div class="chat-bubble bot">I found 3 matching documents and summarized the policy.</div>
+                  <div class="source-card">Confidence 92% · 3 citations</div>
+                </div>
               </div>
-              <div class="project-overlay">
-                <h3>ONEX bioinformatics platform</h3>
-                <p>AI-ready research data workflows at scale.</p>
-              </div>
-            </div>
-            <div class="project-meta">
-              <span>ML platform</span>
-              <strong>FastAPI, PostgreSQL, Docker, WebSockets</strong>
             </div>
           </article>
 
-          <article class="project-card" data-project="erp">
-            <div class="project-visual coral">
-              <div class="erp-grid">
-                <span>Sales</span>
-                <span>Ops</span>
-                <span>Reports</span>
-                <span>SQL</span>
+          <article class="case-card">
+            <div class="case-copy">
+              <span class="case-kicker">Video workflow</span>
+              <h3>RunPod video editor</h3>
+              <p>Flask tool for script-driven captions, overlays, music, and render output.</p>
+              <div class="result-row">
+                <span><strong>6</strong> core features</span>
+                <span><strong>TXT</strong> scripts</span>
+                <span><strong>FFmpeg</strong> render</span>
               </div>
-              <div class="project-overlay">
-                <h3>ERP automation delivery</h3>
-                <p>Business process automation with Odoo and Python.</p>
+              <a href="https://github.com/ajlal333/video-editor-runpod" target="_blank" rel="noreferrer">View repository</a>
+            </div>
+            <div class="case-screen video-screen" aria-label="Video editor screenshot mockup">
+              <div class="screen-top"><span></span><span></span><span></span><strong>Video pipeline</strong></div>
+              <div class="timeline-ui">
+                <div class="preview-frame">9:16 preview</div>
+                <div class="timeline">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+                <div class="subtitle-box">TXT line -> timed subtitle + overlay</div>
               </div>
             </div>
-            <div class="project-meta">
-              <span>Operations</span>
-              <strong>Odoo, Python, SQL, reporting pipelines</strong>
+          </article>
+
+          <article class="case-card">
+            <div class="case-copy">
+              <span class="case-kicker">Audio intelligence</span>
+              <h3>Audioscript</h3>
+              <p>Authenticated transcription API with upload, history, and downloads.</p>
+              <div class="result-row">
+                <span><strong>7</strong> endpoints</span>
+                <span><strong>Bearer</strong> auth</span>
+                <span><strong>Files</strong> history</span>
+              </div>
+              <a href="https://github.com/ajlal333/Audioscript" target="_blank" rel="noreferrer">View repository</a>
+            </div>
+            <div class="case-screen audio-screen" aria-label="Audioscript screenshot mockup">
+              <div class="screen-top"><span></span><span></span><span></span><strong>Transcription API</strong></div>
+              <div class="audio-ui">
+                <div class="waveform"><span></span><span></span><span></span><span></span><span></span></div>
+                <div class="transcript-lines">
+                  <span></span><span></span><span></span>
+                </div>
+                <div class="api-pill">POST /transcribe/audio.mp3</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="case-card">
+            <div class="case-copy">
+              <span class="case-kicker">Desktop AI</span>
+              <h3>Azmuth</h3>
+              <p>Electron AI companion with Gemini chat, memory, and document knowledge.</p>
+              <div class="result-row">
+                <span><strong>5</strong> models</span>
+                <span><strong>300KB</strong> docs</span>
+                <span><strong>Local</strong> memory</span>
+              </div>
+              <a href="https://github.com/ajlal333/azmuth" target="_blank" rel="noreferrer">View repository</a>
+            </div>
+            <div class="case-screen azmuth-screen" aria-label="Azmuth screenshot mockup">
+              <div class="screen-top"><span></span><span></span><span></span><strong>Azmuth</strong></div>
+              <div class="desktop-ui">
+                <div class="pet-orb">AI</div>
+                <div class="terminal-panel">
+                  <span>Gemini model selected</span>
+                  <span>Knowledge base active</span>
+                  <span>Memory restored</span>
+                </div>
+              </div>
             </div>
           </article>
         </div>
@@ -236,12 +267,8 @@
       <section class="section outcomes">
         <div class="outcome-card">
           <span>Why businesses work with us</span>
-          <h2>Engineering depth with business-first delivery.</h2>
-          <p>
-            We sit close to your workflow, translate operational pain into
-            product requirements, and build the AI layer with maintainable code,
-            not fragile one-off scripts.
-          </p>
+          <h2>Less demo. More deployed workflow.</h2>
+          <p>We turn operations into software your team can inspect, use, and improve.</p>
         </div>
         <div class="outcome-stats">
           <div><strong>30%</strong><span>throughput and response-time gains</span></div>
@@ -260,22 +287,22 @@
           <article class="process-card">
             <span>Step 1</span>
             <h3>Analyze</h3>
-            <p>Map the workflow, data sources, edge cases, value points, and success metrics.</p>
+            <p>Workflow, data, edge cases, value.</p>
           </article>
           <article class="process-card">
             <span>Step 2</span>
             <h3>Design</h3>
-            <p>Define the AI workflow, prompts, retrieval, validation, API contract, and operating model.</p>
+            <p>AI path, validation, API contract.</p>
           </article>
           <article class="process-card">
             <span>Step 3</span>
             <h3>Build</h3>
-            <p>Develop the backend, integrations, jobs, dashboards, auth, and deployment pipeline.</p>
+            <p>Backend, jobs, dashboards, auth.</p>
           </article>
           <article class="process-card">
             <span>Step 4</span>
             <h3>Launch and iterate</h3>
-            <p>Monitor quality, improve prompts and data loops, and keep the system useful after launch.</p>
+            <p>Measure quality and improve the loop.</p>
           </article>
         </div>
       </section>
@@ -290,25 +317,17 @@
           <button class="faq-item active">
             <span>What kind of AI projects are a good fit?</span>
             <p>
-              Repetitive business processes, web data extraction, internal
-              copilots, AI-backed dashboards, document workflows, and model
-              integration into existing software.
+              Repetitive operations, document workflows, audio/video pipelines,
+              internal copilots, and AI-backed dashboards.
             </p>
           </button>
           <button class="faq-item">
             <span>Do you only build prototypes?</span>
-            <p>
-              No. The goal is production use: APIs, auth, data validation,
-              Docker, monitoring, documentation, and handoff-ready code.
-            </p>
+            <p>No. We build APIs, auth, validation, deployment, and handoff-ready code.</p>
           </button>
           <button class="faq-item">
             <span>Can you work with existing teams?</span>
-            <p>
-              Yes. The delivery style is forward-deployed: close to the
-              business stakeholders while collaborating with engineering,
-              product, operations, and data teams.
-            </p>
+            <p>Yes. We work close to operations while staying engineering-friendly.</p>
           </button>
         </div>
       </section>
@@ -316,7 +335,7 @@
       <section class="section contact" id="contact">
         <p class="eyebrow">Let's talk</p>
         <h2>Ready to turn a manual workflow into an AI system?</h2>
-        <p>Share the workflow, the data, and the result your business needs.</p>
+        <p>Bring the workflow. We will map the system.</p>
         <div class="hero-actions centered-actions">
           <button class="button primary" type="button" data-open-booking>
             Start your AI project
@@ -338,8 +357,7 @@
           <p class="eyebrow">Book a strategy call</p>
           <h2 id="booking-title">Tell me what your business wants to automate.</h2>
           <p>
-            Share the workflow, the data sources, and a preferred call window.
-            I will review it and reply with next steps.
+            Share the workflow, data source, and preferred call window.
           </p>
         </div>
 
