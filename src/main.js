@@ -36,18 +36,18 @@ const palette = {
 const solutionCopy = {
   automation: {
     color: palette.blue,
-    title: 'AI automation for business operations',
-    copy: 'Turn repeatable work into AI workflows with APIs and review points.',
+    title: 'Agentic workflows for business operations',
+    copy: 'Coordinate agents, business rules, integrations, and human review in one dependable flow.',
   },
   extraction: {
     color: palette.amber,
-    title: 'Structured data from messy sources',
-    copy: 'Extract web, document, and audio data into clean records.',
+    title: 'Grounded decision intelligence',
+    copy: 'Turn documents and business context into traceable, bounded decisions.',
   },
   platform: {
     color: palette.mint,
-    title: 'Production AI platforms',
-    copy: 'Launch model services with jobs, auth, files, and monitoring.',
+    title: 'AI platforms and integrations',
+    copy: 'Connect workflows to APIs, MCP tools, dashboards, auth, and deployment.',
   },
 };
 
@@ -329,18 +329,110 @@ document.querySelectorAll('[data-solution]').forEach((element) => {
   element.addEventListener('pointerenter', () => setSolution(element.dataset.solution));
 });
 
-document.querySelectorAll('.faq-item').forEach((item) => {
-  item.addEventListener('click', () => {
-    document.querySelectorAll('.faq-item').forEach((other) => {
-      if (other !== item) other.classList.remove('active');
-    });
-    item.classList.toggle('active');
+const projectTabs = [...document.querySelectorAll('[data-project-tab]')];
+const projectPanels = [...document.querySelectorAll('[data-project-panel]')];
+
+function setActiveProject(projectId, focusTab = false) {
+  projectTabs.forEach((tab) => {
+    const isActive = tab.dataset.projectTab === projectId;
+    tab.classList.toggle('active', isActive);
+    tab.setAttribute('aria-selected', String(isActive));
+    tab.tabIndex = isActive ? 0 : -1;
+    if (isActive && focusTab) tab.focus();
+  });
+
+  projectPanels.forEach((panel) => {
+    const isActive = panel.dataset.projectPanel === projectId;
+    panel.hidden = !isActive;
+    panel.classList.toggle('active', isActive);
+  });
+}
+
+projectTabs.forEach((tab, index) => {
+  tab.addEventListener('click', () => setActiveProject(tab.dataset.projectTab));
+  tab.addEventListener('keydown', (event) => {
+    const navigationKeys = ['ArrowDown', 'ArrowRight', 'ArrowUp', 'ArrowLeft', 'Home', 'End'];
+    if (!navigationKeys.includes(event.key)) return;
+
+    event.preventDefault();
+    let nextIndex = index;
+    if (event.key === 'ArrowDown' || event.key === 'ArrowRight') {
+      nextIndex = (index + 1) % projectTabs.length;
+    } else if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') {
+      nextIndex = (index - 1 + projectTabs.length) % projectTabs.length;
+    } else if (event.key === 'Home') {
+      nextIndex = 0;
+    } else if (event.key === 'End') {
+      nextIndex = projectTabs.length - 1;
+    }
+
+    setActiveProject(projectTabs[nextIndex].dataset.projectTab, true);
   });
 });
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const supportsFinePointer = window.matchMedia('(pointer: fine)').matches;
+
+if (!prefersReducedMotion && supportsFinePointer) {
+  document.querySelectorAll('.project-visual').forEach((visual) => {
+    visual.addEventListener('pointermove', (event) => {
+      const bounds = visual.getBoundingClientRect();
+      const x = (event.clientX - bounds.left) / bounds.width;
+      const y = (event.clientY - bounds.top) / bounds.height;
+      visual.style.setProperty('--visual-x', `${x * 100}%`);
+      visual.style.setProperty('--visual-y', `${y * 100}%`);
+      visual.style.setProperty('--visual-rotate-x', `${(0.5 - y) * 2.2}deg`);
+      visual.style.setProperty('--visual-rotate-y', `${(x - 0.5) * 2.2}deg`);
+    });
+
+    visual.addEventListener('pointerleave', () => {
+      visual.style.setProperty('--visual-rotate-x', '0deg');
+      visual.style.setProperty('--visual-rotate-y', '0deg');
+    });
+  });
+}
+
+document.querySelectorAll('.faq-item').forEach((item) => {
+  item.setAttribute('aria-expanded', String(item.classList.contains('active')));
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.faq-item').forEach((other) => {
+      if (other !== item) {
+        other.classList.remove('active');
+        other.setAttribute('aria-expanded', 'false');
+      }
+    });
+    item.classList.toggle('active');
+    item.setAttribute('aria-expanded', String(item.classList.contains('active')));
+  });
+});
+
+const sectionLinks = [...document.querySelectorAll('.nav-links a[href^="#"]')];
+const linkedSections = sectionLinks
+  .map((link) => document.querySelector(link.getAttribute('href')))
+  .filter(Boolean);
+
+if ('IntersectionObserver' in window) {
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      const visibleEntry = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((left, right) => right.intersectionRatio - left.intersectionRatio)[0];
+      if (!visibleEntry) return;
+
+      sectionLinks.forEach((link) => {
+        link.classList.toggle('current', link.getAttribute('href') === `#${visibleEntry.target.id}`);
+      });
+    },
+    { rootMargin: '-24% 0px -58% 0px', threshold: [0.01, 0.2, 0.45] }
+  );
+  linkedSections.forEach((section) => sectionObserver.observe(section));
+}
 
 window.addEventListener('scroll', () => {
   document.body.classList.toggle('scrolled', window.scrollY > 34);
 });
+
+document.body.classList.toggle('scrolled', window.scrollY > 34);
 
 window.addEventListener('pointermove', (event) => {
   pointer.x = (event.clientX / window.innerWidth) * 2 - 1;

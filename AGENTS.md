@@ -10,7 +10,7 @@ Core positioning:
 
 - Company name: LogicFolds
 - Audience: business owners, operators, and teams that want AI systems for real workflows
-- Offer: workflow automation, data extraction systems, and AI-ready platforms
+- Offer: agentic workflow orchestration, grounded decision systems, and AI platforms/integrations
 - Tone: business-first, practical, production-minded
 - Primary call to action: book a strategy/project call
 
@@ -31,11 +31,15 @@ There is no React, no framework router, and no backend server process in local V
 - `index.html`
   - Main page markup
   - Navigation, hero, services, work, process, FAQ, contact section, booking dialog
+  - Work uses an interactive tabbed project explorer; keep each tab and panel's ARIA attributes paired
   - Favicon and metadata are declared in the head
 
 - `src/main.js`
   - Three.js tesseract background
   - Interactive service/dashboard behavior
+  - Project explorer tab and keyboard behavior
+  - Subtle pointer tilt for the active project visual
+  - Active navigation-section tracking
   - FAQ accordion behavior
   - Booking modal open/close behavior
   - Booking form submit logic
@@ -190,6 +194,25 @@ Avoid reintroducing:
 
 The personal email `ajlalgoraya333@gmail.com` is still used as the default booking recipient.
 
+## Current Project Library
+
+The main project explorer prioritizes business systems and workflow designs:
+
+- Healthcare denial appeal orchestration
+- Role-based networking intelligence across 1,794 LinkedIn connections, with reputable-employer filtering, verified routes, daily caching, and 9 automated tests
+- Gemini-powered AI opportunity research
+- Benefits claim verification and eligibility
+- Prior authorization package workflow
+- Critical lab alert handoff
+- Clinical protocol deviation review
+- Finance operations ERP
+
+The compact product archive retains GitHub links for AuraAI, Audioscript, the RunPod video editor, and Azmuth.
+
+Keep proof points factual. Some healthcare items are reusable workflow templates or designs, not claims of live clinical deployment. The UI visuals are anonymized, client-displayable representations of the real workflow structure and test data.
+
+The capability strip currently emphasizes UiPath Maestro, agentic workflows, human review, Gemini, MCP, FastAPI, RAG, Playwright, PostgreSQL, and Docker.
+
 ## Visual Direction
 
 The current design is inspired by widgetsflow.com:
@@ -200,7 +223,8 @@ The current design is inspired by widgetsflow.com:
 - Rounded but compact UI
 - Business-focused sections
 - Interactive Three.js tesseract background
-- Card-based service and work sections
+- Interactive project explorer with screenshot-style operational surfaces
+- Compact archive for earlier product builds
 
 Do not turn the site into a personal resume page unless the user explicitly asks. Keep changes business-facing.
 
@@ -219,4 +243,3 @@ Before committing, run:
 ```powershell
 npm run build
 ```
-
