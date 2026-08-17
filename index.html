@@ -22,6 +22,7 @@
         </a>
         <div class="nav-links">
           <a href="#services">Services</a>
+          <a href="/opportunity-sprint/">Support Sprint</a>
           <a href="#work">Work</a>
           <a href="#process">Process</a>
           <a href="#faq">FAQ</a>
@@ -158,6 +159,13 @@
             </ul>
           </article>
         </div>
+
+        <a class="offer-link-band" id="opportunity-sprint" href="/opportunity-sprint/">
+          <span>For IT services support teams</span>
+          <strong>AI Support Workflow Sprint</strong>
+          <p>Turn one repeated ticket process into a build-ready, human-supervised AI workflow.</p>
+          <b>Review the sprint <span aria-hidden="true">-&gt;</span></b>
+        </a>
       </section>
 
       <section class="section work" id="work">
@@ -529,11 +537,9 @@
       <div class="booking-panel">
         <button class="booking-close" type="button" data-close-booking aria-label="Close booking form">x</button>
         <div class="booking-intro">
-          <p class="eyebrow">Book a strategy call</p>
-          <h2 id="booking-title">Tell me what your business wants to automate.</h2>
-          <p>
-            Share the workflow, data source, and preferred call window.
-          </p>
+          <p class="eyebrow">Start a conversation</p>
+          <h2 id="booking-title">What would you like to improve?</h2>
+          <p>A short note is enough. We will arrange the call by email.</p>
         </div>
 
         <form class="booking-form" id="booking-form">
@@ -547,38 +553,22 @@
               <input name="email" type="email" autocomplete="email" required />
             </label>
             <label>
-              <span>Company</span>
-              <input name="company" type="text" autocomplete="organization" required />
-            </label>
-            <label>
-              <span>Website</span>
-              <input name="website" type="url" autocomplete="url" placeholder="https://" />
-            </label>
-            <label>
-              <span>AI need</span>
-              <select name="service" required>
-                <option value="">Select one</option>
-                <option>Agentic workflow orchestration</option>
-                <option>Document or decision intelligence</option>
-                <option>AI platform or integration</option>
-                <option>Not sure yet</option>
-              </select>
-            </label>
-            <label>
-              <span>Preferred call window</span>
-              <input name="callWindow" type="text" placeholder="Tue 3 PM PKT / EST morning" required />
+              <span>Company <small>Optional</small></span>
+              <input name="company" type="text" autocomplete="organization" />
             </label>
           </div>
 
           <label>
-            <span>What should the AI system help with?</span>
+            <span>What would you like to improve?</span>
             <textarea
               name="message"
-              rows="5"
-              placeholder="Example: We spend 8 hours/week copying invoice data into spreadsheets..."
+              rows="4"
+              placeholder="A repeated process, delay, backlog, or quality problem..."
               required
             ></textarea>
           </label>
+
+          <input name="service" type="hidden" value="LogicFolds project inquiry" />
 
           <label class="honeypot" aria-hidden="true">
             <span>Leave this field empty</span>
@@ -587,7 +577,7 @@
 
           <div class="booking-actions">
             <button class="button primary" type="submit">
-              Request call
+              Send request
               <span class="arrow-dot">-></span>
             </button>
             <p class="form-status" id="form-status" role="status" aria-live="polite"></p>

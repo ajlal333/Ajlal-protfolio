@@ -41,10 +41,22 @@ There is no React, no framework router, and no backend server process in local V
   - Subtle pointer tilt for the active project visual
   - Active navigation-section tracking
   - FAQ accordion behavior
-  - Booking modal open/close behavior
-  - Booking form submit logic
+  - Initializes the shared booking behavior
+
+- `opportunity-sprint/index.html`
+  - Dedicated `/opportunity-sprint/` offer page
+  - Qualifies buyers, explains the decision package, and opens the shared booking dialog
+
+- `src/opportunity-sprint.js` and `src/opportunity-sprint.css`
+  - Offer-page interaction and responsive visual system
+
+- `src/booking.js`
+  - Shared booking modal open/close and form submission behavior
   - Posts booking requests to `/api/book-call`
   - Falls back to a prefilled `mailto:` link if the API endpoint is unavailable
+
+- `vite.config.js`
+  - Multi-page build entry points for the portfolio and `/opportunity-sprint/`
 
 - `src/styles.css`
   - Full site styling
@@ -72,6 +84,9 @@ There is no React, no framework router, and no backend server process in local V
 
 - `public/favicon.svg`
   - LogicFolds browser tab icon
+
+- `public/workflow-demo-preview.png`
+  - Workflow control demonstration used by the Opportunity Sprint page
 
 - `public/LogicFolds_Credentials.pdf`
   - Company-branded copy of the credentials/resume PDF linked from the site
@@ -163,12 +178,11 @@ Required fields:
 
 - name
 - email
-- company
-- service
-- callWindow
 - message
 
-There is also a hidden honeypot field named `companyFax`.
+The company field is optional. The page supplies service context through a
+hidden field, and scheduling happens by email after the request. There is also
+a hidden honeypot field named `companyFax`.
 
 ## Known Browser Console Noise
 

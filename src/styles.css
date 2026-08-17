@@ -2165,7 +2165,7 @@ h1 {
 }
 
 .booking-dialog {
-  width: min(1120px, calc(100vw - 32px));
+  width: min(900px, calc(100vw - 32px));
   max-height: calc(100vh - 32px);
   padding: 0;
   overflow: auto;
@@ -2182,12 +2182,12 @@ h1 {
 .booking-panel {
   position: relative;
   display: grid;
-  grid-template-columns: 0.88fr 1.12fr;
-  gap: 24px;
-  padding: 24px;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 18px;
+  padding: 18px;
   background: var(--cream);
   border: 1px solid rgba(255, 255, 255, 0.55);
-  border-radius: 32px;
+  border-radius: 24px;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.22);
 }
 
@@ -2211,19 +2211,19 @@ h1 {
 
 .booking-intro {
   display: flex;
-  min-height: 520px;
+  min-height: 420px;
   flex-direction: column;
-  justify-content: flex-end;
-  padding: 30px;
+  justify-content: center;
+  padding: 28px;
   color: var(--white);
   background: var(--nav);
-  border-radius: 24px;
+  border-radius: 16px;
 }
 
 .booking-intro h2 {
   max-width: 420px;
   margin-bottom: 16px;
-  font-size: clamp(2.25rem, 4vw, 4.1rem);
+  font-size: clamp(2.1rem, 3.5vw, 3.25rem);
   line-height: 1;
   letter-spacing: 0;
 }
@@ -2248,6 +2248,10 @@ h1 {
   gap: 14px;
 }
 
+.form-grid label:last-child {
+  grid-column: 1 / -1;
+}
+
 .booking-form label {
   display: grid;
   gap: 8px;
@@ -2257,6 +2261,13 @@ h1 {
   color: #343434;
   font-size: 13px;
   font-weight: 800;
+}
+
+.booking-form label span small {
+  margin-left: 4px;
+  color: var(--soft);
+  font-size: 11px;
+  font-weight: 600;
 }
 
 .booking-form input,
@@ -2278,7 +2289,7 @@ h1 {
 }
 
 .booking-form textarea {
-  min-height: 136px;
+  min-height: 112px;
   padding-top: 14px;
   resize: vertical;
 }
@@ -2673,32 +2684,62 @@ h1 {
 
   .booking-panel {
     grid-template-columns: 1fr;
-    padding: 14px;
-    border-radius: 24px;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 18px;
   }
 
   .booking-close {
-    top: 24px;
-    right: 24px;
+    top: 16px;
+    right: 16px;
+    width: 36px;
+    height: 36px;
   }
 
   .booking-intro {
     min-height: auto;
-    padding: 68px 22px 24px;
-    border-radius: 18px;
+    padding: 50px 18px 18px;
+    border-radius: 12px;
   }
 
   .booking-intro h2 {
+    margin-bottom: 10px;
+    font-size: 2.05rem;
     letter-spacing: 0;
+  }
+
+  .booking-intro p:not(.eyebrow) {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .booking-form {
+    gap: 12px;
   }
 
   .form-grid {
     grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .booking-form input,
+  .booking-form select,
+  .booking-form textarea {
+    min-height: 46px;
+    border-radius: 12px;
+  }
+
+  .booking-form textarea {
+    min-height: 88px;
   }
 
   .booking-actions,
   .booking-actions .button {
     width: 100%;
+  }
+
+  .booking-actions .button {
+    min-height: 50px;
   }
 
   .mini-metrics,
@@ -2743,6 +2784,73 @@ h1 {
 
   .footer-wordmark {
     letter-spacing: 0;
+  }
+}
+
+.offer-link-band {
+  display: grid;
+  grid-template-columns: minmax(160px, 0.55fr) minmax(240px, 1.15fr) minmax(260px, 1.3fr) auto;
+  gap: 24px;
+  align-items: center;
+  margin-top: 18px;
+  padding: 24px 28px;
+  color: var(--cream);
+  border-radius: 8px;
+  background: var(--ink);
+  text-decoration: none;
+  transition: transform 180ms ease, background 180ms ease;
+  scroll-margin-top: 120px;
+}
+
+.offer-link-band:hover {
+  transform: translateY(-3px);
+  background: #252525;
+}
+
+.offer-link-band > span {
+  color: #9fe5c0;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.offer-link-band > strong {
+  font-family: inherit;
+  font-size: 19px;
+  letter-spacing: 0;
+}
+
+.offer-link-band > p {
+  margin: 0;
+  color: rgba(252, 251, 243, 0.66);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.offer-link-band > b {
+  white-space: nowrap;
+}
+
+@media (max-width: 1080px) {
+  .offer-link-band {
+    grid-template-columns: 0.65fr 1.15fr 1.2fr;
+  }
+
+  .offer-link-band > b {
+    grid-column: 2 / -1;
+  }
+}
+
+@media (max-width: 760px) {
+  .offer-link-band {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 22px;
+  }
+
+  .offer-link-band > b {
+    grid-column: auto;
+    margin-top: 6px;
   }
 }
 

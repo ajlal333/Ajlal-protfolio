@@ -43,12 +43,12 @@ export default async function handler(req, res) {
     email: clean(body.email, 180),
     company: clean(body.company, 180),
     website: clean(body.website, 220),
-    service: clean(body.service, 180),
+    service: clean(body.service, 180) || 'LogicFolds project inquiry',
     callWindow: clean(body.callWindow, 220),
     message: clean(body.message, 2400),
   };
 
-  const requiredFields = ['name', 'email', 'company', 'service', 'callWindow', 'message'];
+  const requiredFields = ['name', 'email', 'message'];
   const missingFields = requiredFields.filter((field) => !lead[field]);
 
   if (missingFields.length > 0) {
@@ -66,31 +66,27 @@ export default async function handler(req, res) {
 
   const toEmail = process.env.BOOKING_TO_EMAIL || DEFAULT_TO_EMAIL;
   const fromEmail = process.env.BOOKING_FROM_EMAIL || 'LogicFolds <onboarding@resend.dev>';
-  const subject = `New AI strategy call request: ${lead.company}`;
+  const subject = `New LogicFolds inquiry: ${lead.company || lead.name}`;
   const text = [
-    'New AI strategy call request',
+    'New LogicFolds inquiry',
     '',
     `Name: ${lead.name}`,
     `Email: ${lead.email}`,
-    `Company: ${lead.company}`,
-    `Website: ${lead.website || 'Not provided'}`,
-    `AI need: ${lead.service}`,
-    `Preferred call window: ${lead.callWindow}`,
+    `Company: ${lead.company || 'Not provided'}`,
+    `Service: ${lead.service}`,
     '',
-    'Workflow details:',
+    'What they want to improve:',
     lead.message,
   ].join('\n');
 
   const html = `
     <div style="font-family: Arial, sans-serif; color: #181818; line-height: 1.6;">
-      <h2>New AI strategy call request</h2>
+      <h2>New LogicFolds inquiry</h2>
       <p><strong>Name:</strong> ${escapeHtml(lead.name)}</p>
       <p><strong>Email:</strong> ${escapeHtml(lead.email)}</p>
-      <p><strong>Company:</strong> ${escapeHtml(lead.company)}</p>
-      <p><strong>Website:</strong> ${escapeHtml(lead.website || 'Not provided')}</p>
-      <p><strong>AI need:</strong> ${escapeHtml(lead.service)}</p>
-      <p><strong>Preferred call window:</strong> ${escapeHtml(lead.callWindow)}</p>
-      <h3>Workflow details</h3>
+      <p><strong>Company:</strong> ${escapeHtml(lead.company || 'Not provided')}</p>
+      <p><strong>Service:</strong> ${escapeHtml(lead.service)}</p>
+      <h3>What they want to improve</h3>
       <p>${escapeHtml(lead.message)}</p>
     </div>
   `;

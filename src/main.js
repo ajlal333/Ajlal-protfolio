@@ -1,5 +1,6 @@
 import './styles.css';
 import * as THREE from 'three';
+import { initializeBooking } from './booking.js';
 
 const canvas = document.querySelector('#webgl');
 
@@ -217,112 +218,7 @@ function setSolution(solution) {
   setText('solution-copy', data.copy);
 }
 
-const bookingRecipient = 'ajlalgoraya333@gmail.com';
-const bookingDialog = document.getElementById('booking-dialog');
-const bookingForm = document.getElementById('booking-form');
-const formStatus = document.getElementById('form-status');
-
-function setFormStatus(message, tone = 'neutral') {
-  if (!formStatus) return;
-  formStatus.textContent = message;
-  formStatus.dataset.tone = tone;
-}
-
-function openBookingDialog() {
-  if (!bookingDialog) return;
-  if (typeof bookingDialog.showModal === 'function') {
-    bookingDialog.showModal();
-  } else {
-    bookingDialog.setAttribute('open', '');
-  }
-  document.body.classList.add('modal-open');
-  setFormStatus('');
-  bookingDialog.querySelector('input, select, textarea')?.focus();
-}
-
-function closeBookingDialog() {
-  if (!bookingDialog) return;
-  if (typeof bookingDialog.close === 'function') {
-    bookingDialog.close();
-  } else {
-    bookingDialog.removeAttribute('open');
-  }
-  document.body.classList.remove('modal-open');
-}
-
-function buildFallbackMailto(payload) {
-  const subject = `AI strategy call request from ${payload.company || payload.name}`;
-  const body = [
-    'New AI strategy call request',
-    '',
-    `Name: ${payload.name}`,
-    `Email: ${payload.email}`,
-    `Company: ${payload.company}`,
-    `Website: ${payload.website || 'Not provided'}`,
-    `AI need: ${payload.service}`,
-    `Preferred call window: ${payload.callWindow}`,
-    '',
-    'Workflow details:',
-    payload.message,
-  ].join('\n');
-
-  return `mailto:${bookingRecipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}
-
-document.querySelectorAll('[data-open-booking]').forEach((button) => {
-  button.addEventListener('click', openBookingDialog);
-});
-
-document.querySelectorAll('[data-close-booking]').forEach((button) => {
-  button.addEventListener('click', closeBookingDialog);
-});
-
-bookingDialog?.addEventListener('click', (event) => {
-  if (event.target === bookingDialog) closeBookingDialog();
-});
-
-bookingDialog?.addEventListener('close', () => {
-  document.body.classList.remove('modal-open');
-});
-
-bookingForm?.addEventListener('submit', async (event) => {
-  event.preventDefault();
-
-  const submitButton = bookingForm.querySelector('button[type="submit"]');
-  const payload = Object.fromEntries(new FormData(bookingForm).entries());
-  const isLocalPreview = ['localhost', '127.0.0.1'].includes(window.location.hostname);
-
-  if (payload.companyFax) return;
-
-  submitButton.disabled = true;
-  setFormStatus('Sending your call request...', 'neutral');
-
-  try {
-    const response = await fetch('/api/book-call', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-
-    if (!response.ok) {
-      const details = await response.json().catch(() => ({}));
-      throw new Error(details.error || 'Booking email service unavailable');
-    }
-
-    bookingForm.reset();
-    setFormStatus('Request sent. I will reply with call details soon.', 'success');
-  } catch (error) {
-    window.location.href = buildFallbackMailto(payload);
-    setFormStatus(
-      isLocalPreview
-        ? 'Local preview cannot send email through Netlify Functions. Your email app should open with the request ready to send.'
-        : 'Email service is not available yet. Your email app should open with the request ready to send.',
-      'warning'
-    );
-  } finally {
-    submitButton.disabled = false;
-  }
-});
+initializeBooking();
 
 document.querySelectorAll('[data-solution]').forEach((element) => {
   element.addEventListener('click', () => setSolution(element.dataset.solution));
