@@ -1,5 +1,6 @@
 import './styles.css';
 import * as THREE from 'three';
+import blogContent from '../content/blog-posts.json';
 import { initializeBooking } from './booking.js';
 
 const canvas = document.querySelector('#webgl');
@@ -219,6 +220,74 @@ function setSolution(solution) {
 }
 
 initializeBooking();
+
+const homeBlogGrid = document.querySelector('[data-home-blog]');
+
+function createElement(tagName, className, text) {
+  const element = document.createElement(tagName);
+  if (className) element.className = className;
+  if (text) element.textContent = text;
+  return element;
+}
+
+function formatBlogDate(date) {
+  return new Intl.DateTimeFormat('en', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  }).format(new Date(`${date}T12:00:00`));
+}
+
+function createHomeBlogCard(post, index) {
+  const card = createElement('a', `home-blog-card${index === 0 ? ' featured' : ''}`);
+  card.href = `/blog/?post=${encodeURIComponent(post.slug)}`;
+  card.setAttribute('aria-label', `Read ${post.title}`);
+
+  if (index === 0 && post.image) {
+    const visual = createElement('div', 'home-blog-visual');
+    const image = document.createElement('img');
+    image.src = post.image;
+    image.alt = post.imageAlt || '';
+    image.loading = 'lazy';
+    visual.append(image);
+    card.append(visual);
+  } else {
+    const signal = createElement('div', 'home-blog-signal');
+    signal.setAttribute('aria-hidden', 'true');
+    signal.append(
+      createElement('span', '', String(index + 1).padStart(2, '0')),
+      createElement('i'),
+      createElement('i'),
+      createElement('i')
+    );
+    card.append(signal);
+  }
+
+  const body = createElement('div', 'home-blog-body');
+  const meta = createElement('div', 'home-blog-meta');
+  meta.append(
+    createElement('span', '', post.category),
+    createElement('time', '', formatBlogDate(post.published))
+  );
+
+  const title = createElement('h3', '', post.title);
+  const excerpt = createElement('p', '', post.excerpt);
+  const footer = createElement('div', 'home-blog-footer');
+  footer.append(
+    createElement('span', '', post.readTime),
+    createElement('b', '', '->')
+  );
+  body.append(meta, title, excerpt, footer);
+  card.append(body);
+
+  return card;
+}
+
+if (homeBlogGrid) {
+  blogContent.posts
+    .slice(0, 3)
+    .forEach((post, index) => homeBlogGrid.append(createHomeBlogCard(post, index)));
+}
 
 document.querySelectorAll('[data-solution]').forEach((element) => {
   element.addEventListener('click', () => setSolution(element.dataset.solution));

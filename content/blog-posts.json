@@ -1,0 +1,183 @@
+{
+  "posts": [
+    {
+      "slug": "five-checks-before-automating-a-workflow",
+      "title": "Five checks before you automate a workflow with AI",
+      "excerpt": "A practical test for separating a valuable operational system from an expensive demo.",
+      "category": "AI operations",
+      "published": "2026-08-18",
+      "readTime": "6 min read",
+      "featured": true,
+      "author": "LogicFolds",
+      "image": "/workflow-demo-preview.png",
+      "imageAlt": "Synthetic support workflow showing evidence, approval gates, and controlled write-back",
+      "standfirst": "The best first AI workflow is not the most impressive one. It is the one with repeated work, reachable evidence, a clear owner, and a measurable handoff.",
+      "takeaways": [
+        "Start with operational repetition, not a model feature.",
+        "Define evidence, exceptions, and ownership before automation.",
+        "Baseline the handoff so improvement can be measured."
+      ],
+      "sections": [
+        {
+          "heading": "1. The work repeats and the variation is bounded",
+          "paragraphs": [
+            "Repetition creates the economic case for automation, but repetition alone is not enough. A useful candidate has a recognizable beginning, a small number of common paths, and an output that the next person or system can act on.",
+            "Map ten recent examples before choosing the technology. If every example follows a completely different path, the immediate opportunity may be better process design rather than an AI build."
+          ],
+          "bullets": [
+            "A consistent trigger starts the work.",
+            "Most cases follow a small set of paths.",
+            "The expected output is specific and usable."
+          ]
+        },
+        {
+          "heading": "2. The system can reach the evidence",
+          "paragraphs": [
+            "An AI workflow is only as useful as the context it can retrieve. Policies, tickets, documents, customer records, and system state need to be available at the moment a decision or draft is produced.",
+            "List every source, its owner, its freshness, and the access method. This exposes integration work early and prevents a polished prototype from hiding a missing data path."
+          ]
+        },
+        {
+          "heading": "3. A person owns the decision boundary",
+          "paragraphs": [
+            "Decide what the system may retrieve, classify, draft, recommend, or write back. Then name the person accountable for exceptions and consequential actions.",
+            "Human review works best as an explicit workflow state with evidence, a proposed action, and clear approve, revise, or escalate choices. A vague instruction to check the AI later is not a control."
+          ]
+        },
+        {
+          "heading": "4. The handoff is measurable",
+          "paragraphs": [
+            "Capture the current cycle time, queue size, rework rate, response time, or number of manual touches before the build begins. Choose one primary measure and a small set of guardrails.",
+            "The first release should prove a better handoff, not merely produce a clever answer. That keeps the evaluation connected to the operation the business actually wants to improve."
+          ]
+        },
+        {
+          "heading": "5. The failure mode is acceptable",
+          "paragraphs": [
+            "Every workflow needs a safe path for missing evidence, low confidence, integration failure, and unusual cases. The safest first candidate is one that can pause, route to a person, and recover without causing irreversible harm.",
+            "If the workflow passes all five checks, the next step is a short discovery sprint: document the current state, define the boundary, connect one evidence path, and test the complete handoff with representative cases."
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "title": "NIST AI Risk Management Framework",
+          "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+        }
+      ],
+      "cta": "Map the workflow before buying more tools."
+    },
+    {
+      "slug": "human-review-is-a-workflow-step",
+      "title": "Human review is a workflow step, not a safety disclaimer",
+      "excerpt": "Where review belongs, what the operator needs to see, and how the process should recover.",
+      "category": "Workflow control",
+      "published": "2026-08-17",
+      "readTime": "5 min read",
+      "featured": false,
+      "author": "LogicFolds",
+      "standfirst": "Human-in-the-loop design becomes useful when review has a trigger, evidence, a decision, and a next state. Without those pieces, it is only a sentence in a slide deck.",
+      "takeaways": [
+        "Trigger review at a defined decision boundary.",
+        "Show evidence and the proposed action together.",
+        "Design approval, revision, escalation, and timeout paths."
+      ],
+      "sections": [
+        {
+          "heading": "Review needs a reason to exist",
+          "paragraphs": [
+            "A review step should protect a specific business decision. It may be required because a write-back is irreversible, a policy is ambiguous, the evidence is incomplete, or the impact of a wrong action is too high.",
+            "When the reason is explicit, the team can decide which cases need review and which routine cases can continue automatically. This prevents every item from landing in a new manual queue."
+          ]
+        },
+        {
+          "heading": "The operator needs a decision packet",
+          "paragraphs": [
+            "A reviewer should not have to repeat the system's research. Present the source evidence, the relevant rule, the proposed action, confidence or uncertainty, and the consequences of approval in one place.",
+            "The goal is not to make the interface look intelligent. It is to reduce the time required for an accountable person to make a sound decision."
+          ],
+          "bullets": [
+            "Source evidence and timestamps",
+            "The rule or policy applied",
+            "The proposed action and destination",
+            "Uncertainty, missing information, and exceptions"
+          ]
+        },
+        {
+          "heading": "Approval is not the only outcome",
+          "paragraphs": [
+            "Useful workflows support approve, revise, reject, request more information, and escalate. They also define what happens when nobody responds within the expected time.",
+            "Each outcome should produce an auditable next state. That gives operations teams a real control surface instead of an inbox full of disconnected review requests."
+          ]
+        },
+        {
+          "heading": "Measure the review queue",
+          "paragraphs": [
+            "Track review volume, time to decision, revision rate, escalation rate, and the reasons cases are routed to people. Those signals reveal where instructions, retrieval, or workflow rules need improvement.",
+            "The best human-review design does not remove accountability. It concentrates attention where judgment is valuable and lets routine work move without unnecessary delay."
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "title": "NIST Generative AI Profile",
+          "url": "https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-generative-artificial-intelligence"
+        }
+      ],
+      "cta": "Design the review state before connecting the write-back."
+    },
+    {
+      "slug": "from-ai-demo-to-dependable-operation",
+      "title": "What turns an AI demo into a dependable operation",
+      "excerpt": "The missing layer is usually orchestration, evidence, permissions, evaluation, and recovery.",
+      "category": "Production AI",
+      "published": "2026-08-16",
+      "readTime": "6 min read",
+      "featured": false,
+      "author": "LogicFolds",
+      "standfirst": "A demo proves that a model can produce a useful output once. An operational system must produce an acceptable outcome repeatedly, inside the constraints of the business.",
+      "takeaways": [
+        "Treat the model as one component in a larger system.",
+        "Evaluate the complete workflow, including failure paths.",
+        "Make permissions, observability, and recovery visible."
+      ],
+      "sections": [
+        {
+          "heading": "The model is not the workflow",
+          "paragraphs": [
+            "A production system needs triggers, retrieval, business rules, tool calls, approvals, state, and destinations. The model may classify, extract, draft, or recommend, but the surrounding software decides when that output is useful and what may happen next.",
+            "Draw the end-to-end path before optimizing a prompt. This makes integration gaps and ownership questions visible while they are still inexpensive to change."
+          ]
+        },
+        {
+          "heading": "Evaluation must follow the handoff",
+          "paragraphs": [
+            "A response can be accurate and still fail the operation because it arrives late, omits a required field, uses stale evidence, or cannot be written into the next system.",
+            "Test representative cases through the complete flow. Measure output quality alongside completion rate, latency, human corrections, exceptions, and downstream acceptance."
+          ]
+        },
+        {
+          "heading": "Permissions are part of product behavior",
+          "paragraphs": [
+            "Define which identity reads each data source, which tools it can use, and which actions require stronger authorization. Keep read, draft, recommend, and write permissions separate.",
+            "This boundary should be visible to operators. A person reviewing an action needs to know what the system already did and what approval will allow it to do next."
+          ]
+        },
+        {
+          "heading": "Recovery makes the system dependable",
+          "paragraphs": [
+            "Integrations time out, documents arrive incomplete, policies conflict, and cases fall outside the expected pattern. A dependable workflow records its state, retries bounded failures, and routes unresolved cases without losing context.",
+            "Production readiness is less about removing every failure and more about making failures observable, contained, and recoverable. That is the system layer a convincing demo rarely shows."
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "title": "NIST AI Risk Management Framework",
+          "url": "https://www.nist.gov/itl/ai-risk-management-framework"
+        }
+      ],
+      "cta": "Prove the full handoff, not only the model response."
+    }
+  ]
+}

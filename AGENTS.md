@@ -47,6 +47,20 @@ There is no React, no framework router, and no backend server process in local V
   - Dedicated `/opportunity-sprint/` offer page
   - Qualifies buyers, explains the decision package, and opens the shared booking dialog
 
+- `blog/index.html`
+  - Dedicated `/blog/` index and article reading surface
+  - Article URLs use `/blog/?post=<slug>`
+
+- `content/blog-posts.json`
+  - Structured source of truth for homepage and blog-page content
+  - Keep posts sorted newest first and never publish more than two entries on one date
+
+- `src/blog.js` and `src/blog.css`
+  - Blog filtering, article rendering, metadata, structured data, and responsive presentation
+
+- `scripts/validate-blog.mjs`
+  - Validates required fields, unique slugs, date order, section depth, and the two-post daily limit
+
 - `src/opportunity-sprint.js` and `src/opportunity-sprint.css`
   - Offer-page interaction and responsive visual system
 
@@ -107,6 +121,12 @@ Run local dev server:
 
 ```powershell
 npm run dev
+```
+
+Validate blog content:
+
+```powershell
+npm run validate:blog
 ```
 
 Build production output:
@@ -226,6 +246,22 @@ The compact product archive retains GitHub links for AuraAI, Audioscript, the Ru
 Keep proof points factual. Some healthcare items are reusable workflow templates or designs, not claims of live clinical deployment. The UI visuals are anonymized, client-displayable representations of the real workflow structure and test data.
 
 The capability strip currently emphasizes UiPath Maestro, agentic workflows, human review, Gemini, MCP, FastAPI, RAG, Playwright, PostgreSQL, and Docker.
+
+## Blog Publishing Rules
+
+The homepage shows the three newest entries from `content/blog-posts.json`. The full library and article reader live at `/blog/`.
+
+For every new article:
+
+- Write for business owners and operators evaluating practical AI systems.
+- Focus on workflow orchestration, decision controls, integrations, evaluation, operations, or measurable implementation lessons.
+- Keep public claims factual and traceable. Never invent clients, deployments, benchmarks, quotes, or outcomes.
+- Use current authoritative sources for factual or time-sensitive claims and include them in the `sources` array.
+- Publish one strong article per scheduled run and never exceed two posts on a calendar date.
+- Keep posts sorted newest first, use unique kebab-case slugs, and run `npm run validate:blog` before `npm run build`.
+- Preserve client confidentiality. Screenshots and examples must be synthetic, anonymized, or explicitly approved for public use.
+
+The Codex automation `publish-logicfolds-blog-posts` runs at 10:30 and 16:30 local time each day. Each run may publish at most one article and must stop instead of modifying a dirty or diverged branch. It validates, builds, commits only `content/blog-posts.json`, and pushes without force.
 
 ## Visual Direction
 
