@@ -5,7 +5,7 @@
  * Functions, so this script no longer writes article pages. What it does write
  * is the shell those functions need:
  *
- *   netlify/functions/blog-shell.mjs
+ *   lib/blog-shell.generated.mjs
  *     - the hashed <link>/<script> tags Vite emitted for the blog entry
  *     - the nav, footer and booking dialog markup, lifted from blog/post.html
  *       so editing that file updates every blog page
@@ -21,7 +21,7 @@ import { readFile, writeFile, rm, readdir } from 'node:fs/promises';
 import { resolve, join } from 'node:path';
 
 const DIST = resolve('dist');
-const FALLBACK_SITE_URL = 'https://logicfolds.netlify.app';
+const FALLBACK_SITE_URL = 'https://logicfolds.com';
 
 const rawSiteUrl =
   process.env.SITE_URL || process.env.URL || process.env.DEPLOY_PRIME_URL || '';
@@ -118,7 +118,10 @@ export const shell = ${JSON.stringify({ ...assets, nav, footer, dialog }, null, 
 export const fallbackPosts = ${JSON.stringify(posts, null, 2)};
 `;
 
-  await writeFile(resolve('netlify/functions/blog-shell.mjs'), module, 'utf8');
+  // Must live outside netlify/functions/ — Netlify bundles every module there as
+  // its own function, and this one has no handler. esbuild still inlines it into
+  // the blog functions because they import it by relative path.
+  await writeFile(resolve('lib/blog-shell.generated.mjs'), module, 'utf8');
 
   // These are build artifacts, not pages. Functions own /blog/ and /blog/posts/*.
   await rm(shellPath, { force: true });

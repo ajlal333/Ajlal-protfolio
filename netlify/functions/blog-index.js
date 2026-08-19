@@ -12,7 +12,7 @@
 
 import { renderIndexPage, articlePath } from '../../lib/blog-render.mjs';
 import { loadPosts, resolveSiteUrl } from '../../lib/blog-source.mjs';
-import { shell, fallbackPosts } from './blog-shell.mjs';
+import { shell, fallbackPosts } from '../../lib/blog-shell.generated.mjs';
 
 export async function handler(event) {
   const siteUrl = resolveSiteUrl(process.env);

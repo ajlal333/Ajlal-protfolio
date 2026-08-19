@@ -11,8 +11,8 @@
     Build shell, not a page.
 
     Vite builds this so the blog's stylesheet and script get hashed filenames.
-    scripts/prerender-blog.mjs then lifts the asset tags and the nav / footer /
-    booking dialog out of the built copy into netlify/functions/blog-shell.mjs,
+    scripts/build-blog-shell.mjs then lifts the asset tags and the nav / footer /
+    booking dialog out of the built copy into lib/blog-shell.generated.mjs,
     and deletes this file from dist. The Netlify Functions that serve /blog/ and
     /blog/posts/<slug>/ import that shell, so editing the nav here updates every
     blog page without touching the functions.
