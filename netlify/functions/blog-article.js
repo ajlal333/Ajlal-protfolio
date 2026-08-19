@@ -34,11 +34,16 @@ function html(statusCode, body, extraHeaders = {}) {
 /**
  * Work out which article was asked for.
  *
- * netlify.toml rewrites /blog/posts/* to this function as ?slug=:splat, but that
- * interpolation does not reliably survive the rewrite — in production the query
- * param arrived empty and every article 404'd. The original URL is preserved on
- * a rewrite, so the path is the dependable source and the query param is kept as
- * a fallback for direct function calls.
+ * netlify.toml rewrites /blog/posts/* to this function as ?slug=:splat. That is
+ * the normal route and is preferred here; it works, including alongside tracking
+ * parameters such as ?utm_source=.
+ *
+ * The path fallback exists as cheap insurance rather than a fix for a known bug.
+ * An empty slug renders the not-found page, so anything that drops the query
+ * parameter takes every article down at once — a failure worth being unable to
+ * have. Articles were briefly 404ing while the Supabase environment variables
+ * propagated to the function runtime, which is what prompted this; the splat
+ * interpolation was wrongly blamed at the time and was never actually at fault.
  */
 function resolveSlug(event) {
   const candidates = [];
