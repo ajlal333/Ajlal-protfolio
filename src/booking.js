@@ -90,6 +90,17 @@ export function initializeBooking({ defaultService = '' } = {}) {
 
       if (!response.ok) {
         const details = await response.json().catch(() => ({}));
+
+        // A 4xx means the submission itself needs fixing (invalid email, too
+        // brief, throttled). Show that inline rather than bouncing the visitor
+        // into their mail client. 404 still means the endpoint is missing, so
+        // it falls through to the mailto fallback below.
+        if (response.status >= 400 && response.status < 500 && response.status !== 404) {
+          setFormStatus(details.error || 'Please check the form and try again.', 'warning');
+          bookingForm.elements.namedItem(details.fields?.[0] ?? '')?.focus();
+          return;
+        }
+
         throw new Error(details.error || 'Booking email service unavailable');
       }
 

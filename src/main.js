@@ -2,6 +2,7 @@ import './styles.css';
 import * as THREE from 'three';
 import blogContent from '../content/blog-posts.json';
 import { initializeBooking } from './booking.js';
+import { initializeNavMenu } from './nav.js';
 
 const canvas = document.querySelector('#webgl');
 
@@ -240,7 +241,7 @@ function formatBlogDate(date) {
 
 function createHomeBlogCard(post, index) {
   const card = createElement('a', `home-blog-card${index === 0 ? ' featured' : ''}`);
-  card.href = `/blog/?post=${encodeURIComponent(post.slug)}`;
+  card.href = `/blog/posts/${encodeURIComponent(post.slug)}/`;
   card.setAttribute('aria-label', `Read ${post.title}`);
 
   if (index === 0 && post.image) {
@@ -283,11 +284,55 @@ function createHomeBlogCard(post, index) {
   return card;
 }
 
-if (homeBlogGrid) {
-  blogContent.posts
+function renderHomeBlog(posts) {
+  if (!homeBlogGrid) return;
+  homeBlogGrid.replaceChildren();
+  posts
     .slice(0, 3)
     .forEach((post, index) => homeBlogGrid.append(createHomeBlogCard(post, index)));
 }
+
+// Render the bundled snapshot first so the strip is present in the initial HTML
+// and never shifts layout, then quietly refresh from Supabase. Posts published
+// since the last deploy appear without one, and if Supabase is unset, paused or
+// slow, the bundled copy simply stays.
+renderHomeBlog(blogContent.posts);
+
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+async function refreshHomeBlog() {
+  if (!homeBlogGrid || !SUPABASE_URL || !SUPABASE_ANON_KEY) return;
+
+  const today = new Date().toISOString().slice(0, 10);
+  const query =
+    `${SUPABASE_URL.replace(/\/+$/, '')}/rest/v1/posts` +
+    '?select=slug,title,excerpt,category,published,read_time,image,image_alt' +
+    `&status=eq.published&published=lte.${today}&order=published.desc&limit=3`;
+
+  try {
+    const response = await fetch(query, {
+      headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` },
+      signal: AbortSignal.timeout(4000),
+    });
+    if (!response.ok) return;
+
+    const rows = await response.json();
+    if (!Array.isArray(rows) || rows.length === 0) return;
+
+    renderHomeBlog(
+      rows.map((row) => ({
+        ...row,
+        readTime: row.read_time,
+        imageAlt: row.image_alt || '',
+      }))
+    );
+  } catch {
+    // Keep the bundled posts. A stale strip beats an empty one.
+  }
+}
+
+refreshHomeBlog();
 
 document.querySelectorAll('[data-solution]').forEach((element) => {
   element.addEventListener('click', () => setSolution(element.dataset.solution));
@@ -436,3 +481,5 @@ function animate() {
 }
 
 animate();
+
+initializeNavMenu();

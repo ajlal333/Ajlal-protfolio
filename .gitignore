@@ -5,3 +5,4 @@ dist/
 github-projects/
 .agents/
 __pycache__/
+netlify/functions/blog-shell.mjs

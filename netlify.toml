@@ -3,7 +3,39 @@
   publish = "dist"
   functions = "netlify/functions"
 
+[functions]
+  node_bundler = "esbuild"
+
 [[redirects]]
   from = "/api/book-call"
   to = "/.netlify/functions/book-call"
   status = 200
+
+# Blog pages render per request from Supabase so publishing a post costs no
+# deploy. On the free plan a production deploy is 15 of 300 monthly credits, so
+# two posts a day would exhaust the account in roughly ten days. Responses carry
+# long CDN cache lifetimes, so these functions rarely actually run.
+
+[[redirects]]
+  from = "/blog/posts/*"
+  to = "/.netlify/functions/blog-article?slug=:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/blog"
+  to = "/.netlify/functions/blog-index"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/blog/"
+  to = "/.netlify/functions/blog-index"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/sitemap.xml"
+  to = "/.netlify/functions/blog-sitemap"
+  status = 200
+  force = true

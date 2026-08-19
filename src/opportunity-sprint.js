@@ -1,3 +1,4 @@
+import { initializeNavMenu } from './nav.js';
 import './opportunity-sprint.css';
 import { initializeBooking } from './booking.js';
 
@@ -27,3 +28,5 @@ document.querySelectorAll('.faq-item').forEach((item) => {
     }
   });
 });
+
+initializeNavMenu();

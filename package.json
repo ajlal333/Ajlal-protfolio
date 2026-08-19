@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "validate:blog": "node scripts/validate-blog.mjs",
-    "build": "vite build",
+    "posts:push": "node scripts/sync-posts.mjs",
+    "posts:pull": "node scripts/sync-posts.mjs --pull",
+    "build": "vite build && node scripts/build-blog-shell.mjs",
     "preview": "vite preview --host 127.0.0.1"
   },
   "dependencies": {

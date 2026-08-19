@@ -10,17 +10,31 @@
       content="LogicFolds designs agentic workflows, decision systems, and AI platforms for business operations."
     />
     <title>LogicFolds | Business AI Automation Studio</title>
+    <link rel="canonical" href="__SITE_URL__/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="LogicFolds" />
+    <meta property="og:title" content="LogicFolds | Business AI Automation Studio" />
+    <meta property="og:description" content="LogicFolds designs agentic workflows, decision systems, and AI platforms for business operations." />
+    <meta property="og:url" content="__SITE_URL__/" />
+    <meta property="og:image" content="__SITE_URL__/og-cover.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="LogicFolds | Business AI Automation Studio" />
+    <meta name="twitter:description" content="LogicFolds designs agentic workflows, decision systems, and AI platforms for business operations." />
+    <meta name="twitter:image" content="__SITE_URL__/og-cover.png" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"LogicFolds","url":"__SITE_URL__/","logo":"__SITE_URL__/favicon.svg","description":"LogicFolds designs agentic workflows, decision systems, and AI platforms for business operations.","sameAs":["https://github.com/ajlal333"]}</script>
   </head>
   <body>
     <canvas id="webgl" aria-hidden="true"></canvas>
 
     <nav class="nav-wrap" aria-label="Primary">
-      <div class="nav-pill">
+      <div class="nav-pill" data-nav-menu-root>
         <a class="brand" href="#home" aria-label="LogicFolds home">
           <span class="brand-mark">LF</span>
           <span class="brand-word">LogicFolds</span>
         </a>
-        <div class="nav-links">
+        <div class="nav-links" id="nav-menu">
           <a href="#services">Services</a>
           <a href="/opportunity-sprint/">Support Sprint</a>
           <a href="#work">Work</a>
@@ -28,6 +42,17 @@
           <a href="#blog">Blog</a>
           <a href="./LogicFolds_Credentials.pdf" target="_blank" rel="noreferrer">Credentials</a>
         </div>
+        <button
+          class="nav-toggle"
+          type="button"
+          data-nav-toggle
+          aria-expanded="false"
+          aria-controls="nav-menu"
+          aria-label="Open menu"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </button>
         <button class="nav-cta" type="button" data-open-booking>Start a project</button>
       </div>
     </nav>

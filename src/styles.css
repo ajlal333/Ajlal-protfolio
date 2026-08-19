@@ -2603,8 +2603,58 @@ h1 {
     opacity: 0.2;
   }
 
+  /* Sit the toggle beside the CTA once the inline links are gone. */
+  .nav-toggle {
+    margin-left: auto;
+  }
+
+  /* The link list becomes a disclosure panel anchored under the pill. */
   .nav-links {
-    display: none;
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    left: 0;
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 8px;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    transform: translateY(-6px);
+    visibility: hidden;
+    transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+  }
+
+  [data-nav-open='true'] .nav-links {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+  }
+
+  .nav-links a {
+    padding: 13px 14px;
+    color: var(--ink);
+    border-radius: 12px;
+    font-size: 17px;
+  }
+
+  .nav-links a:hover {
+    opacity: 1;
+    background: var(--cream-2);
+  }
+
+  .nav-links a::after {
+    right: auto;
+    bottom: auto;
+    left: 14px;
+    width: 16px;
+    height: 2px;
+    top: calc(50% + 13px);
   }
 
   .hero,
@@ -2714,9 +2764,15 @@ h1 {
   }
 
   .nav-pill {
+    gap: 8px;
     padding: 10px 12px;
     background: var(--nav);
     border-radius: 999px;
+  }
+
+  .nav-toggle {
+    width: 34px;
+    height: 34px;
   }
 
   .brand-mark {
@@ -3102,5 +3158,107 @@ h1 {
     animation: none !important;
     scroll-behavior: auto !important;
     transition: none !important;
+  }
+}
+
+
+/* ---- Compact-viewport navigation toggle ---- */
+
+.nav-pill {
+  position: relative;
+}
+
+.nav-toggle {
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0;
+  border: 1px solid var(--line);
+  background: transparent;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 200ms ease, border-color 200ms ease;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 17px;
+  height: 2px;
+  background: var(--ink);
+  border-radius: 2px;
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.nav-toggle:hover {
+  background: var(--cream-2);
+}
+
+.nav-toggle:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+[data-nav-open='true'] .nav-toggle span:first-child {
+  transform: translateY(3.5px) rotate(45deg);
+}
+
+[data-nav-open='true'] .nav-toggle span:last-child {
+  transform: translateY(-3.5px) rotate(-45deg);
+}
+
+/* On the dark compact pill the toggle has to read against ink, not cream. */
+@media (max-width: 760px) {
+  .nav-toggle {
+    width: 38px;
+    height: 38px;
+    border-color: rgba(255, 255, 255, 0.28);
+  }
+
+  .nav-toggle span {
+    background: var(--white);
+  }
+
+  .nav-toggle:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-links,
+  .nav-toggle span {
+    transition: none;
+  }
+}
+
+@media (min-width: 1081px) {
+  .nav-toggle {
+    display: none;
+  }
+}
+
+/* Narrow phones: keep brand, toggle and CTA on one line without clipping. */
+@media (max-width: 430px) {
+  .nav-pill {
+    gap: 6px;
+  }
+
+  .brand-word {
+    font-size: 18px;
+  }
+
+  .nav-cta {
+    flex: none;
+    padding: 0 10px;
+  }
+}
+
+/* Below this the wordmark has to give way; the LF mark still carries the brand. */
+@media (max-width: 400px) {
+  .brand-word {
+    display: none;
   }
 }

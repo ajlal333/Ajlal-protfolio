@@ -139,6 +139,13 @@
     box-shadow 220ms ease;
 }
 
+/* Category filtering toggles [hidden], and the display rules above would
+   otherwise win over the user-agent default of display:none. */
+.blog-list-card[hidden],
+.blog-list-card.lead[hidden] {
+  display: none;
+}
+
 .blog-list-card:hover {
   transform: translateY(-4px);
   border-color: rgba(44, 111, 255, 0.42);
