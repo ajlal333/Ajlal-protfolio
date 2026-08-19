@@ -3,3 +3,5 @@ dist/
 .vite/
 *.local
 github-projects/
+.agents/
+__pycache__/
