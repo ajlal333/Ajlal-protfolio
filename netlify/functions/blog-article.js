@@ -31,18 +31,52 @@ function html(statusCode, body, extraHeaders = {}) {
   };
 }
 
+/**
+ * Work out which article was asked for.
+ *
+ * netlify.toml rewrites /blog/posts/* to this function as ?slug=:splat, but that
+ * interpolation does not reliably survive the rewrite — in production the query
+ * param arrived empty and every article 404'd. The original URL is preserved on
+ * a rewrite, so the path is the dependable source and the query param is kept as
+ * a fallback for direct function calls.
+ */
+function resolveSlug(event) {
+  const candidates = [];
+
+  const fromQuery = event.queryStringParameters?.slug;
+  if (fromQuery) candidates.push(fromQuery);
+
+  for (const value of [event.rawUrl, event.path, event.headers?.['x-nf-original-path']]) {
+    if (!value) continue;
+    let pathname = value;
+    if (value.includes('://')) {
+      try {
+        pathname = new URL(value).pathname;
+      } catch {
+        continue;
+      }
+    }
+    const match = /\/blog\/posts\/(.+?)\/*$/.exec(pathname);
+    if (match) candidates.push(match[1]);
+  }
+
+  for (const raw of candidates) {
+    let slug;
+    try {
+      slug = decodeURIComponent(raw);
+    } catch {
+      slug = raw;
+    }
+    slug = slug.replace(/\/+$/, '').trim();
+    if (slug) return slug;
+  }
+
+  return '';
+}
+
 export async function handler(event) {
   const siteUrl = resolveSiteUrl(process.env);
-
-  // netlify.toml routes /blog/posts/* here, so the splat still carries a
-  // trailing slash and may be percent-encoded.
-  const raw = event.queryStringParameters?.slug ?? '';
-  let slug;
-  try {
-    slug = decodeURIComponent(raw).replace(/\/+$/, '').trim();
-  } catch {
-    slug = raw.replace(/\/+$/, '').trim();
-  }
+  const slug = resolveSlug(event);
 
   const { post, posts, source, error } = await loadPostBySlug(slug, { fallbackPosts });
 

@@ -48,9 +48,12 @@ create index if not exists posts_published_idx
   on public.posts (status, published desc);
 
 -- Keep updated_at honest without relying on the writer to set it.
+-- search_path is pinned empty so the function cannot be hijacked by objects in
+-- a schema that happens to sit earlier in the caller's search path.
 create or replace function public.touch_updated_at()
 returns trigger
 language plpgsql
+set search_path = ''
 as $$
 begin
   new.updated_at = now();

@@ -4,5 +4,7 @@ dist/
 *.local
 github-projects/
 .agents/
+# Machine-specific absolute symlinks into .agents/; restore with `npx skills add`.
+.claude/skills/
 __pycache__/
 lib/blog-shell.generated.mjs
