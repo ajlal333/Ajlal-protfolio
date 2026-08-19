@@ -14,7 +14,7 @@
 
 import { renderArticlePage, renderIndexPage } from '../../lib/blog-render.mjs';
 import { loadPostBySlug, resolveSiteUrl } from '../../lib/blog-source.mjs';
-import { shell, fallbackPosts } from './blog-shell.mjs';
+import { shell, fallbackPosts } from '../../lib/blog-shell.generated.mjs';
 
 const CDN_CACHE = 'public, durable, s-maxage=3600, stale-while-revalidate=604800';
 const BROWSER_CACHE = 'public, max-age=0, must-revalidate';
