@@ -6,6 +6,13 @@
 [functions]
   node_bundler = "esbuild"
 
+# Drafts and publishes one blog post a day straight into Supabase — no deploy,
+# no credit cost beyond a few seconds of compute. 04:00 UTC = 09:00 Asia/Karachi.
+# A daily write also keeps the free Supabase project from hitting its one-week
+# inactivity pause.
+[functions."publish-blog"]
+  schedule = "0 4 * * *"
+
 [[redirects]]
   from = "/api/book-call"
   to = "/.netlify/functions/book-call"
