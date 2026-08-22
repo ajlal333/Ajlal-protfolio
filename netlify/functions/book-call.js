@@ -186,5 +186,53 @@ export async function handler(event) {
     });
   }
 
+  // Best-effort confirmation to the lead. The owner notification above already
+  // succeeded, so a failure here must not fail the request — but a silent inbox
+  // after someone asks for a call is exactly what loses the booking, so we try.
+  try {
+    const confirmText = [
+      `Hi ${lead.name},`,
+      '',
+      'Thanks for reaching out to LogicFolds. We have your request and will reply',
+      'within one business day to arrange a strategy call.',
+      '',
+      'For reference, here is what you sent:',
+      lead.message,
+      '',
+      'Need to add anything? Just reply to this email.',
+      '',
+      '— LogicFolds',
+    ].join('\n');
+
+    const confirmHtml = `
+      <div style="font-family: Arial, sans-serif; color: #181818; line-height: 1.6;">
+        <p>Hi ${escapeHtml(lead.name)},</p>
+        <p>Thanks for reaching out to LogicFolds. We have your request and will reply within one business day to arrange a strategy call.</p>
+        <p><strong>For reference, here is what you sent:</strong></p>
+        <p>${escapeHtml(lead.message)}</p>
+        <p>Need to add anything? Just reply to this email.</p>
+        <p>— LogicFolds</p>
+      </div>
+    `;
+
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${resendApiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: fromEmail,
+        to: lead.email,
+        reply_to: toEmail,
+        subject: 'Thanks for reaching out to LogicFolds',
+        text: confirmText,
+        html: confirmHtml,
+      }),
+    });
+  } catch (error) {
+    console.warn(`[book-call] lead confirmation failed: ${error.message}`);
+  }
+
   return json(200, { ok: true });
 }

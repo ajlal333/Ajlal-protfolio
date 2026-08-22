@@ -106,7 +106,10 @@ export function initializeBooking({ defaultService = '' } = {}) {
 
       bookingForm.reset();
       if (defaultService && serviceSelect) serviceSelect.value = defaultService;
-      setFormStatus('Request sent. We will reply by email.', 'success');
+      setFormStatus(
+        'Request sent — check your inbox for a confirmation. We reply within one business day to set up a call.',
+        'success'
+      );
     } catch (error) {
       window.location.href = buildFallbackMailto(payload);
       setFormStatus(
