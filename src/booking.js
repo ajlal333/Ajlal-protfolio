@@ -1,4 +1,4 @@
-const bookingRecipient = 'ajlalgoraya333@gmail.com';
+const bookingRecipient = 'ajlal@logicfolds.com';
 
 function buildFallbackMailto(payload) {
   const subject = `LogicFolds inquiry from ${payload.company || payload.name}`;
