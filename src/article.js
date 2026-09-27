@@ -1,6 +1,9 @@
 import './blog.css';
 import { initializeBooking } from './booking.js';
 import { initializeNavMenu } from './nav.js';
+import { initAnalytics } from './analytics.js';
+
+initAnalytics();
 
 const articleTitle = document.body.dataset.articleTitle;
 

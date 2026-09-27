@@ -1,8 +1,10 @@
 import { initializeNavMenu } from './nav.js';
 import './opportunity-sprint.css';
 import { initializeBooking } from './booking.js';
+import { initAnalytics } from './analytics.js';
 
-initializeBooking({ defaultService: 'AI Support Workflow Sprint' });
+initAnalytics();
+initializeBooking({ defaultService: 'Free support agent trial' });
 
 const updateNavigation = () => {
   document.body.classList.toggle('scrolled', window.scrollY > 24);

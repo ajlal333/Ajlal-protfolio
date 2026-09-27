@@ -3,6 +3,9 @@ import * as THREE from 'three';
 import blogContent from '../content/blog-posts.json';
 import { initializeBooking } from './booking.js';
 import { initializeNavMenu } from './nav.js';
+import { initAnalytics } from './analytics.js';
+
+initAnalytics();
 
 const canvas = document.querySelector('#webgl');
 
