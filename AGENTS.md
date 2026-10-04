@@ -1,295 +1,113 @@
 # LogicFolds Site Agent Guide
 
-This file gives future coding agents the working context for this project.
+Working context for coding agents. This is the current source of truth for the project.
 
-## Project Summary
+## 1. Project
 
-LogicFolds is a business-facing AI solutions website. It presents the company as a practical AI automation studio for businesses, not as a job-seeking personal portfolio.
+- **What:** LogicFolds is a business-facing AI automation studio website. It is not a personal portfolio, and must not become a resume page unless the user asks.
+- **Audience:** business owners and operators who want AI systems for real workflows.
+- **Offer:** agentic workflow orchestration, grounded decision systems, AI platforms and integrations.
+- **Primary CTA:** book a strategy/project call; the Opportunity Sprint (`/opportunity-sprint/`) is the main offer page.
+- **Repo:** https://github.com/ajlal333/Ajlal-protfolio (production branch: `main`)
+- **Live:** https://logicfolds.com (Netlify, site id `2e52c233-f33a-43da-8750-70aa1ac752fa`, free plan)
+- **Owner email:** ajlalgoraya333@gmail.com
+- **Branding:** always "LogicFolds". Never "Ajlal AI", "Ajlal AI Solutions", or "AH".
+- **Truthfulness:** business-first, concise, production-minded. Never invent clients, deployments, benchmarks, testimonials, revenue, or results. Every public proof point must be real. Some healthcare items are reusable templates or designs, not live clinical deployments, and the UI visuals are anonymized representations.
 
-Core positioning:
+## 2. Stack
 
-- Company name: LogicFolds
-- Audience: business owners, operators, and teams that want AI systems for real workflows
-- Offer: agentic workflow orchestration, grounded decision systems, and AI platforms/integrations
-- Tone: business-first, practical, production-minded
-- Primary call to action: book a strategy/project call
+Vite 8 (rolldown), vanilla JavaScript, Three.js 0.166, plain CSS, Netlify hosting and Functions, Supabase, Resend, PostHog. No React, no framework router. Do not introduce one.
 
-## Tech Stack
+Vite entries (`vite.config.js`): `index.html`, `opportunity-sprint/index.html`, `blog/post.html` (a build shell, not a page).
 
-- Vite
-- Vanilla JavaScript
-- Three.js
-- Plain CSS
-- Netlify hosting
-- Netlify Functions for the booking email endpoint
-- Resend API for outbound email
+## 3. Commands
 
-There is no React, no framework router, and no backend server process in local Vite dev mode.
-
-## Important Files
-
-- `index.html`
-  - Main page markup
-  - Navigation, hero, services, work, process, FAQ, contact section, booking dialog
-  - Work uses an interactive tabbed project explorer; keep each tab and panel's ARIA attributes paired
-  - Favicon and metadata are declared in the head
-
-- `src/main.js`
-  - Three.js tesseract background
-  - Interactive service/dashboard behavior
-  - Project explorer tab and keyboard behavior
-  - Subtle pointer tilt for the active project visual
-  - Active navigation-section tracking
-  - FAQ accordion behavior
-  - Initializes the shared booking behavior
-
-- `opportunity-sprint/index.html`
-  - Dedicated `/opportunity-sprint/` offer page
-  - Qualifies buyers, explains the decision package, and opens the shared booking dialog
-
-- `blog/index.html`
-  - Dedicated `/blog/` index and article reading surface
-  - Article URLs use `/blog/?post=<slug>`
-
-- `content/blog-posts.json`
-  - Structured source of truth for homepage and blog-page content
-  - Keep posts sorted newest first and never publish more than two entries on one date
-
-- `src/blog.js` and `src/blog.css`
-  - Blog filtering, article rendering, metadata, structured data, and responsive presentation
-
-- `scripts/validate-blog.mjs`
-  - Validates required fields, unique slugs, date order, section depth, and the two-post daily limit
-
-- `src/opportunity-sprint.js` and `src/opportunity-sprint.css`
-  - Offer-page interaction and responsive visual system
-
-- `src/booking.js`
-  - Shared booking modal open/close and form submission behavior
-  - Posts booking requests to `/api/book-call`
-  - Falls back to a prefilled `mailto:` link if the API endpoint is unavailable
-
-- `vite.config.js`
-  - Multi-page build entry points for the portfolio and `/opportunity-sprint/`
-
-- `src/styles.css`
-  - Full site styling
-  - Responsive layout
-  - Booking modal and form styles
-  - Favicon is not styled here; it lives in `public/favicon.svg`
-
-- `netlify/functions/book-call.js`
-  - Netlify Function used in production
-  - Receives POST booking requests
-  - Sends email through Resend using `fetch`
-  - Does not require the `resend` npm package
-
-- `netlify.toml`
-  - Netlify build config
-  - Build command: `npm run build`
-  - Publish directory: `dist`
-  - Functions directory: `netlify/functions`
-  - Redirects `/api/book-call` to `/.netlify/functions/book-call`
-
-- `api/book-call.js`
-  - Vercel-compatible version of the booking function
-  - Kept for possible future Vercel deployment
-  - Not used by Netlify unless deployment target changes
-
-- `public/favicon.svg`
-  - LogicFolds browser tab icon
-
-- `public/workflow-demo-preview.png`
-  - Workflow control demonstration used by the Opportunity Sprint page
-
-- `public/LogicFolds_Credentials.pdf`
-  - Company-branded copy of the credentials/resume PDF linked from the site
-
-- `public/Ajlal_Resume.pdf` and `public/Muhammad_Ajlal_Haider_Resume.pdf`
-  - Older resume PDF assets
-  - Do not remove unless the user confirms they are no longer needed
-
-## Commands
-
-Install dependencies:
-
-```powershell
+```bash
 npm install
-```
-
-Run local dev server:
-
-```powershell
-npm run dev
-```
-
-Validate blog content:
-
-```powershell
-npm run validate:blog
-```
-
-Build production output:
-
-```powershell
-npm run build
-```
-
-Preview production build locally:
-
-```powershell
+npm run dev            # Vite only; Netlify Functions do NOT run here
+npm run validate:blog  # validates content/blog-posts.json
+npm run build          # vite build + scripts/build-blog-shell.mjs
 npm run preview
 ```
 
-## Local Development Notes
+Run `npm run validate:blog` then `npm run build` before committing.
 
-The Vite dev server does not run Netlify Functions. If the booking form is tested on `localhost` with `npm run dev`, `/api/book-call` will usually fail and the form will fall back to opening a prefilled email.
+Local dev: `/api/book-call` and the `/blog/` routes need Netlify Functions, so under `npm run dev` they fail (the booking form falls back to a `mailto:`). Use `netlify dev` to exercise the real functions. Optional `.env.local` (gitignored) for analytics/Supabase in dev:
 
-For local testing of the real Netlify Function, use the Netlify CLI:
-
-```powershell
-netlify dev
+```
+VITE_SUPABASE_URL=https://caefslijpwsnmnumvxie.supabase.co
+VITE_SUPABASE_ANON_KEY=...       # publishable anon key
+VITE_POSTHOG_PROJECT_TOKEN=...   # publishable phc_ token
 ```
 
-That command may require installing and logging into the Netlify CLI.
+Production needs none of this; all env vars are set in Netlify.
 
-## Deployment
+## 4. Architecture
 
-The live deployment target is Netlify.
+| Area | Where |
+|---|---|
+| Home | `index.html`, `src/main.js`, `src/styles.css` |
+| Tesseract background | `src/tesseract.js` (Three.js, named imports, loaded with a dynamic `import()` from `main.js` so it stays off the critical path) |
+| Booking | `src/booking.js` -> `/api/book-call` -> `netlify/functions/book-call.js` (Resend via `fetch`). Sends the owner notification and a best-effort lead confirmation. Mailto fallback goes to `ajlal@logicfolds.com`. |
+| Blog render | `lib/blog-render.mjs` (pure HTML, no fs/env/net) |
+| Blog data | `lib/blog-source.mjs` (Supabase read, falls back to `content/blog-posts.json`) |
+| Blog serving | `netlify/functions/blog-article.js`, `blog-index.js`, `blog-sitemap.js` |
+| Blog build shell | `blog/post.html` + `scripts/build-blog-shell.mjs` -> generated `lib/blog-shell.generated.mjs` (gitignored); `src/article.js`, `src/blog.css` |
+| Blog publish (keyed) | `scripts/publish-one.mjs` (needs `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY`) |
+| Blog publish (env-free) | `scripts/validate-draft.mjs` validates a draft, verifies sources, prints an INSERT. Used by the daily cloud routine. |
+| Blog sync | `scripts/sync-posts.mjs` (`npm run posts:push` / `posts:pull`) |
+| Opportunity Sprint | `opportunity-sprint/index.html`, `src/opportunity-sprint.{js,css}` |
+| Analytics | `src/analytics.js` (env-gated PostHog, US host, CDN-loaded, off on localhost) |
+| Shared nav | `src/nav.js` |
+| Vercel booking handler | `api/book-call.js`: unused on Netlify, kept for a possible future Vercel move |
+| Schema | `supabase/schema.sql`, `supabase/README.md` |
+| Assets | `public/` (favicon, og-cover, workflow demo preview, `LogicFolds_Credentials.pdf`, self-hosted `fonts/`) |
+| Archived resumes | `unpublished/`. Do not delete without the user's confirmation. |
 
-Netlify should use:
+### Blog mechanics
 
-- Build command: `npm run build`
-- Publish directory: `dist`
-- Functions directory: `netlify/functions`
+Posts live in a Supabase `posts` table and are server-rendered per request by Netlify Functions. Publishing is an `INSERT`: no git commit, no deploy. URLs are `/blog/` and `/blog/posts/<slug>/`.
 
-The route `/api/book-call` is intentionally kept as the front-end endpoint. Netlify rewrites it to the function through `netlify.toml`.
+- Articles ship full HTML with OG tags and BlogPosting JSON-LD. Never move rendering into the browser; that breaks crawlers and link previews.
+- RLS: the `anon` key reads only `status='published' AND published<=today`. Writes need `service_role`, server-side only.
+- If Supabase is unconfigured, paused or down, the functions serve `content/blog-posts.json` and drop the CDN TTL to 60s. Preserve this fallback.
+- The homepage blog strip renders the bundled snapshot first, then refreshes from Supabase with the anon key.
+- The article CTA links to `/opportunity-sprint/`.
 
-## Required Environment Variables
+### Booking flow
 
-Set these in Netlify site settings:
+1. The form posts JSON to `/api/book-call`; `netlify.toml` rewrites it to `/.netlify/functions/book-call`.
+2. The function validates `name`, `email`, `message` (company is optional; service context is a hidden field; `companyFax` is a honeypot).
+3. It emails the owner through Resend, then sends the lead a best-effort confirmation.
+4. If the function fails, the front end opens a prefilled `mailto:`.
 
-```env
-RESEND_API_KEY=your_resend_api_key
-BOOKING_TO_EMAIL=ajlalgoraya333@gmail.com
-BOOKING_FROM_EMAIL=LogicFolds <onboarding@resend.dev>
-```
+`POST /api/book-call 404` in production means `netlify.toml` or the function is missing from the deployed commit, or Netlify did not redeploy.
 
-Notes:
+## 5. Already set up (do NOT redo)
 
-- `RESEND_API_KEY` is required for automatic email sending.
-- `BOOKING_TO_EMAIL` defaults to `ajlalgoraya333@gmail.com` if omitted, but keep it explicit in Netlify.
-- `BOOKING_FROM_EMAIL` can use `LogicFolds <onboarding@resend.dev>` while the domain is not verified in Resend.
-- For a custom sender such as `LogicFolds <hello@logicfolds.com>`, verify the domain in Resend first.
-- After changing environment variables, redeploy the Netlify site.
+- **Supabase** project `caefslijpwsnmnumvxie`: `posts` table, RLS verified. Netlify env: `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`. `.mcp.json` is committed; authenticate the supabase connector per device.
+- **Daily blog routine:** Claude cloud routine "LogicFolds daily blog publisher" (`trig_015cxgmbTSdMzwMeNaWi6Xrw`), 04:00 UTC (09:00 Asia/Karachi). It drafts one post and inserts it through the Supabase MCP connector plus `scripts/validate-draft.mjs`. It is account-level and already running. **Do not create a second scheduler (double-publish).** It is intermittent (connector auth expiry, cloud egress blocks). When it misses a day, publish manually: write a draft, run `node scripts/validate-draft.mjs draft.json`, and execute the printed SQL through the Supabase MCP. The old Codex automation `publish-logicfolds-blog-posts` and the git-based blog flow are obsolete.
+- **Booking email:** Resend, domain `logicfolds.com` verified. Netlify env: `RESEND_API_KEY`, `BOOKING_TO_EMAIL=ajlalgoraya333@gmail.com`, `BOOKING_FROM_EMAIL=LogicFolds <ajlal@logicfolds.com>`.
+- **Domain email:** free Zoho mailbox `ajlal@logicfolds.com`; DNS on Netlify/NS1 with SPF, DKIM (`zmail._domainkey`) and DMARC (`_dmarc`).
+- **PostHog:** `VITE_POSTHOG_PROJECT_TOKEN` set in Netlify (US cloud). Analytics and session replay are live in production and off on localhost by design.
+- **Google Search Console:** verified by the `google-site-verification` meta tag in `index.html`; `sitemap.xml` submitted.
 
-## Booking Form Behavior
+## 6. Constraints and rules
 
-Form submit flow:
+- **Netlify free plan: 300 credits/month, 15 per production deploy (about 20 deploys).** Deploys are scarce. Never reintroduce a deploy-per-post blog workflow. Batch site changes into single deploys. Pushing to `main` is the deploy.
+- **Bundle size:** Three.js is the dominant cost. Keep it as named imports in `src/tesseract.js`, lazily loaded, and do not add large dependencies.
+- **Blog editorial:** write for business owners and operators evaluating practical AI (orchestration, decision controls, integrations, evaluation, operations, measurable lessons). Verify every source URL resolves before citing. Keep claims factual and traceable, and preserve client confidentiality. `scripts/validate-blog.mjs` and the DB constraints enforce: required fields, unique kebab-case slugs, YYYY-MM-DD dates, newest first, no future dates, at least 2 takeaways, at least 3 sections, at least 1 absolute-URL source, at most 2 posts per date, title at most 70 characters, excerpt at most 165.
+- **Git:** stage explicit paths, never `git add -A`. `.agents/`, `_to_delete/` and `.investigation/` are scratch; never stage them. Do not force-push.
+- **Project library:** the work explorer prioritizes business systems and workflow designs (healthcare denial appeals, role-based networking intelligence, Gemini opportunity research, benefits verification, prior authorization, critical lab alerts, protocol deviation review, finance ERP). The compact archive keeps GitHub links for AuraAI, Audioscript, the RunPod video editor and Azmuth. The work tabs and panels use paired ARIA attributes; keep them paired.
+- **Visual direction:** cream background, dark pill navigation, blue primary accents, compact rounded UI, interactive Three.js tesseract background, screenshot-style operational surfaces.
+- **Console noise:** errors mentioning `sw.js`, `mobx-state-tree`, `ContentService` or `host-network-events.js` come from browser extensions, not this site.
 
-1. User submits the booking form.
-2. Front end posts JSON to `/api/book-call`.
-3. Netlify redirects that path to `/.netlify/functions/book-call`.
-4. The function validates required fields.
-5. The function sends email through Resend.
-6. If the function fails or is unavailable, the front end opens a prefilled `mailto:` link.
+## 7. Open items
 
-Required fields:
+1. Tighten DMARC from `p=none` to `p=quarantine`, then `reject`, after reviewing reports.
+2. Rotate `RESEND_API_KEY` and mark it secret in Netlify. It was exposed in a chat transcript.
+3. Outreach/campaign system (scrape, campaign, auto-reply) is a separate project. Run cold outreach from a separate lookalike domain, never `logicfolds.com`.
 
-- name
-- email
-- message
+## 8. Working style
 
-The company field is optional. The page supplies service context through a
-hidden field, and scheduling happens by email after the request. There is also
-a hidden honeypot field named `companyFax`.
-
-## Known Browser Console Noise
-
-Errors mentioning `sw.js`, `mobx-state-tree`, `ContentService`, or `host-network-events.js` are likely from browser extensions or devtools instrumentation, not this site.
-
-The important app-level error to watch for is:
-
-```text
-POST /api/book-call 404
-```
-
-On Netlify, that means `netlify.toml` or `netlify/functions/book-call.js` is missing from the deployed commit, or Netlify did not redeploy after the files were pushed.
-
-## Branding Rules
-
-Use `LogicFolds` for all public-facing site copy.
-
-Avoid reintroducing:
-
-- Ajlal AI
-- Ajlal AI Solutions
-- AH as the brand mark
-
-The personal email `ajlalgoraya333@gmail.com` is still used as the default booking recipient.
-
-## Current Project Library
-
-The main project explorer prioritizes business systems and workflow designs:
-
-- Healthcare denial appeal orchestration
-- Role-based networking intelligence across 1,794 LinkedIn connections, with reputable-employer filtering, verified routes, daily caching, and 9 automated tests
-- Gemini-powered AI opportunity research
-- Benefits claim verification and eligibility
-- Prior authorization package workflow
-- Critical lab alert handoff
-- Clinical protocol deviation review
-- Finance operations ERP
-
-The compact product archive retains GitHub links for AuraAI, Audioscript, the RunPod video editor, and Azmuth.
-
-Keep proof points factual. Some healthcare items are reusable workflow templates or designs, not claims of live clinical deployment. The UI visuals are anonymized, client-displayable representations of the real workflow structure and test data.
-
-The capability strip currently emphasizes UiPath Maestro, agentic workflows, human review, Gemini, MCP, FastAPI, RAG, Playwright, PostgreSQL, and Docker.
-
-## Blog Publishing Rules
-
-The homepage shows the three newest entries from `content/blog-posts.json`. The full library and article reader live at `/blog/`.
-
-For every new article:
-
-- Write for business owners and operators evaluating practical AI systems.
-- Focus on workflow orchestration, decision controls, integrations, evaluation, operations, or measurable implementation lessons.
-- Keep public claims factual and traceable. Never invent clients, deployments, benchmarks, quotes, or outcomes.
-- Use current authoritative sources for factual or time-sensitive claims and include them in the `sources` array.
-- Publish one strong article per scheduled run and never exceed two posts on a calendar date.
-- Keep posts sorted newest first, use unique kebab-case slugs, and run `npm run validate:blog` before `npm run build`.
-- Preserve client confidentiality. Screenshots and examples must be synthetic, anonymized, or explicitly approved for public use.
-
-The Codex automation `publish-logicfolds-blog-posts` runs at 10:30 and 16:30 local time each day. Each run may publish at most one article and must stop instead of modifying a dirty or diverged branch. It validates, builds, commits only `content/blog-posts.json`, and pushes without force.
-
-## Visual Direction
-
-The current design is inspired by widgetsflow.com:
-
-- Cream background
-- Dark pill navigation
-- Blue primary accents
-- Rounded but compact UI
-- Business-focused sections
-- Interactive Three.js tesseract background
-- Interactive project explorer with screenshot-style operational surfaces
-- Compact archive for earlier product builds
-
-Do not turn the site into a personal resume page unless the user explicitly asks. Keep changes business-facing.
-
-## Git Notes
-
-There may be an unrelated untracked `.agents/` folder in the repo. Do not blindly stage it.
-
-Prefer staging specific files, for example:
-
-```powershell
-git add index.html src/main.js src/styles.css netlify.toml netlify/functions/book-call.js public/favicon.svg AGENTS.md
-```
-
-Before committing, run:
-
-```powershell
-npm run build
-```
+Act as a senior engineer and design partner. Read code before large changes, follow existing patterns, make focused edits. For frontend changes, QA at desktop, tablet and mobile (including 320px) and keep the console clean. Keep the project deployable throughout.
