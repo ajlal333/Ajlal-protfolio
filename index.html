@@ -236,10 +236,11 @@
           </label>
           <label>
             <span>Hourly cost, in USD</span>
-            <input id="savings-rate" name="rate" type="number" inputmode="decimal" min="0" step="0.5" placeholder="e.g. 25" />
+            <input id="savings-rate" name="rate" type="number" inputmode="decimal" min="0" step="0.5" placeholder="e.g. 25" aria-describedby="savings-rate-hint" />
+            <small class="field-hint" id="savings-rate-hint">Use what an hour of this person's time costs you.</small>
           </label>
           <div class="savings-result" role="status" aria-live="polite">
-            <span>Estimated savings per month</span>
+            <span>Estimated savings per month, up to</span>
             <strong id="savings-total">Enter both numbers</strong>
             <small>Estimate: hours per week &times; hourly cost &times; 52 weeks &divide; 12 months, assuming the manual entry is fully removed.</small>
           </div>
@@ -253,22 +254,23 @@
             <h2>See the work.</h2>
           </div>
           <p>
-            Sales and finance builds come first. Every build is labeled, so you
-            know whether you are looking at a prototype or a template.
+            Client projects are covered by confidentiality agreements, so they
+            are not shown here. The builds below are prototypes and templates
+            that show how we work.
           </p>
         </div>
 
         <div class="work-explorer">
           <div class="project-index" role="tablist" aria-label="Selected builds">
             <button class="project-tab active" id="tab-finance" type="button" role="tab" aria-selected="true" aria-controls="project-finance" data-project-tab="finance">
-              <span>01</span><strong>Finance operations ERP</strong><small>Finance · Prototype</small>
+              <span>01</span><strong>Finance operations system</strong><small>Finance · Prototype</small>
             </button>
             <button class="project-tab" id="tab-opportunity" type="button" role="tab" aria-selected="false" aria-controls="project-opportunity" tabindex="-1" data-project-tab="opportunity">
               <span>02</span><strong>AI opportunity research</strong><small>Sales · Prototype</small>
             </button>
             <div class="project-index-label" role="presentation">More builds</div>
             <button class="project-tab" id="tab-network" type="button" role="tab" aria-selected="false" aria-controls="project-network" tabindex="-1" data-project-tab="network">
-              <span>03</span><strong>Network intelligence</strong><small>Growth · Prototype</small>
+              <span>03</span><strong>Warm introductions</strong><small>Growth · Prototype</small>
             </button>
             <button class="project-tab" id="tab-benefits" type="button" role="tab" aria-selected="false" aria-controls="project-benefits" tabindex="-1" data-project-tab="benefits">
               <span>04</span><strong>Benefits eligibility</strong><small>Public sector · Prototype</small>
@@ -291,8 +293,8 @@
             <article class="project-panel active" id="project-finance" role="tabpanel" aria-labelledby="tab-finance" data-project-panel="finance">
               <div class="project-copy">
                 <span class="case-kicker">Prototype · Finance platform</span>
-                <h3>Finance operations ERP</h3>
-                <p>Centralizes reimbursements, invoices, approvals, payments, journals, and intercompany work with role-based access.</p>
+                <h3>Finance operations system</h3>
+                <p>Keeps expense claims, invoices, approvals, and payments in one place. Each person sees only the parts their job needs, and every change is recorded, so you can always see who did what.</p>
                 <div class="result-row">
                   <span><strong>11</strong> demo steps</span>
                   <span><strong>10</strong> connected actions</span>
@@ -300,13 +302,13 @@
                 </div>
                 <button class="case-action" type="button" data-open-booking>Book a free automation audit <span>-></span></button>
               </div>
-              <div class="project-visual finance-visual" aria-label="Finance ERP dashboard">
+              <div class="project-visual finance-visual" aria-label="Finance operations dashboard">
                 <div class="screen-top"><span></span><span></span><span></span><strong>Finance operations / Demo</strong></div>
                 <div class="finance-snapshot">
                   <div class="finance-kpis"><div><small>Reimbursements</small><strong>24</strong><span>6 pending</span></div><div><small>Invoice value</small><strong>$48.2K</strong><span>This month</span></div><div><small>Approvals</small><strong>8</strong><span>Needs action</span></div></div>
                   <div class="finance-layout">
-                    <div class="approval-queue"><small>Approval queue</small><div><span>Travel reimbursement</span><b>$820</b></div><div><span>Vendor invoice</span><b>$4,600</b></div><div><span>Intercompany settlement</span><b>$12,300</b></div></div>
-                    <div class="cash-view"><small>Workflow completion</small><strong>82%</strong><span style="--bar: 82%"></span><p>Protected routes, audit history, and role-aware actions.</p></div>
+                    <div class="approval-queue"><small>Approval queue</small><div><span>Travel reimbursement</span><b>$820</b></div><div><span>Vendor invoice</span><b>$4,600</b></div><div><span>Contractor payment</span><b>$12,300</b></div></div>
+                    <div class="cash-view"><small>Workflow completion</small><strong>82%</strong><span style="--bar: 82%"></span><p>Each person sees only their part, and every change is recorded.</p></div>
                   </div>
                 </div>
               </div>
@@ -316,7 +318,7 @@
               <div class="project-copy">
                 <span class="case-kicker">Prototype · Sales research</span>
                 <h3>AI opportunity research</h3>
-                <p>Researches each lead, finds a real business problem, and scores the best-fit AI solution before outreach.</p>
+                <p>Looks into each sales lead before anyone contacts them, finds a real problem that business has, and ranks the solutions that would help it most.</p>
                 <div class="result-row">
                   <span><strong>5</strong> leads tested</span>
                   <span><strong>4</strong> recommendations</span>
@@ -346,8 +348,8 @@
             <article class="project-panel" id="project-network" role="tabpanel" aria-labelledby="tab-network" data-project-panel="network" hidden>
               <div class="project-copy">
                 <span class="case-kicker">Prototype · Network research</span>
-                <h3>Role-based networking intelligence</h3>
-                <p>Filters reputable employers for a target role, maps verified first-degree routes, and drafts evidence-based outreach.</p>
+                <h3>Warm introduction finder</h3>
+                <p>Finds well-regarded companies for a given job, spots people you already know there, and drafts a message to each one based on facts you can check.</p>
                 <div class="result-row">
                   <span><strong>1,794</strong> connections</span>
                   <span><strong>10</strong> companies</span>
@@ -363,14 +365,14 @@
                     <div class="network-table">
                       <div class="table-row table-head"><span>Evidence</span><span>Network</span><span>Status</span></div>
                       <div class="table-row"><strong>Matched employer</strong><span>15 verified contacts</span><b>92</b></div>
-                      <div class="table-row"><strong>10 employers</strong><span>Reputation 7+</span><b>Pass</b></div>
-                      <div class="table-row"><strong>Daily cache</strong><span>Cost-controlled run</span><b>Ready</b></div>
+                      <div class="table-row"><strong>10 employers</strong><span>Well rated</span><b>Pass</b></div>
+                      <div class="table-row"><strong>Daily refresh</strong><span>Low running cost</span><b>Ready</b></div>
                     </div>
                     <div class="warm-path">
                       <small>Best verified path</small>
                       <div class="path-line"><span>You</span><i></i><span>1st</span><i></i><span>Buyer</span></div>
                       <p>Based on role fit, company reputation, current hiring, and relationship evidence.</p>
-                      <div class="report-formats"><span>MD</span><span>JSON</span><span>CSV</span></div>
+                      <div class="report-formats"><span>Report</span><span>Spreadsheet</span></div>
                     </div>
                   </div>
                 </div>
@@ -381,7 +383,7 @@
               <div class="project-copy">
                 <span class="case-kicker">Prototype · Public-sector workflow</span>
                 <h3>Benefits claim verification</h3>
-                <p>Combines residency, income, and SNAP eligibility checks into one explainable decision workflow.</p>
+                <p>Checks where an applicant lives, what they earn, and whether they qualify for food assistance, then gives one decision with the reasons written down.</p>
                 <div class="result-row">
                   <span><strong>3</strong> checks</span>
                   <span><strong>10</strong> outputs</span>
@@ -394,7 +396,7 @@
                 <div class="benefits-snapshot">
                   <div class="claim-header"><div><small>Unified verification</small><strong>Evidence review complete</strong></div><span>Approved</span></div>
                   <div class="verification-list">
-                    <div><span>01</span><p><strong>Residency</strong><small>Address matched after normalization</small></p><b>Proceed</b></div>
+                    <div><span>01</span><p><strong>Residency</strong><small>Address matched to records</small></p><b>Proceed</b></div>
                     <div><span>02</span><p><strong>Income</strong><small>Reported and verified values align</small></p><b>Valid</b></div>
                     <div><span>03</span><p><strong>Eligibility</strong><small>Within household income threshold</small></p><b>Eligible</b></div>
                   </div>
@@ -406,8 +408,8 @@
             <article class="project-panel" id="project-denials" role="tabpanel" aria-labelledby="tab-denials" data-project-panel="denials" hidden>
               <div class="project-copy">
                 <span class="case-kicker">Template · Healthcare workflow</span>
-                <h3>Denial appeal orchestration</h3>
-                <p>Coordinates intake, extraction, code confirmation, policy research, evidence matching, review, and submission.</p>
+                <h3>Denial appeal workflow</h3>
+                <p>When an insurer refuses to pay a claim, this reads the paperwork, checks the insurer&rsquo;s rules, gathers the supporting documents, and prepares the appeal for a person to review and send.</p>
                 <div class="result-row">
                   <span><strong>19</strong> steps</span>
                   <span><strong>2</strong> outcomes</span>
@@ -415,20 +417,20 @@
                 </div>
                 <button class="case-action" type="button" data-open-booking>Book a free automation audit <span>-></span></button>
               </div>
-              <div class="project-visual denial-visual" aria-label="Denial appeal orchestration workflow view">
+              <div class="project-visual denial-visual" aria-label="Denial appeal workflow view">
                 <div class="screen-top"><span></span><span></span><span></span><strong>Appeal / CASE-2048</strong></div>
                 <div class="flow-snapshot">
                   <div class="surface-toolbar"><span class="run-state">Flow active</span><span>Appeal due in 18 days</span></div>
                   <div class="workflow-track">
                     <div class="flow-node complete"><small>01</small><strong>Intake</strong><span>Done</span></div>
                     <div class="flow-node complete"><small>02</small><strong>Extract</strong><span>Done</span></div>
-                    <div class="flow-node complete"><small>03</small><strong>Classify</strong><span>CO50</span></div>
+                    <div class="flow-node complete"><small>03</small><strong>Classify</strong><span>Done</span></div>
                     <div class="flow-node active"><small>04</small><strong>Evidence</strong><span>Running</span></div>
                     <div class="flow-node"><small>05</small><strong>Review</strong><span>Queued</span></div>
                   </div>
                   <div class="branch-track">
                     <span><b>Policy</b> 4 criteria found</span>
-                    <span><b>Provider</b> NPI validated</span>
+                    <span><b>Provider</b> ID checked</span>
                     <i>+</i>
                     <span><b>Evidence</b> 8 documents mapped</span>
                   </div>
@@ -441,7 +443,7 @@
               <div class="project-copy">
                 <span class="case-kicker">Template · Healthcare workflow</span>
                 <h3>Prior authorization package</h3>
-                <p>Maps clinical evidence to payer criteria, drafts the request, and routes it through review and submission.</p>
+                <p>Before a treatment, matches the patient&rsquo;s records to what the insurer requires, drafts the approval request, and passes it to a person to check and send.</p>
                 <div class="result-row">
                   <span><strong>5</strong> stages</span>
                   <span><strong>2</strong> AI steps</span>
@@ -468,7 +470,7 @@
               <div class="project-copy">
                 <span class="case-kicker">Template · Clinical workflow</span>
                 <h3>Critical lab alert handoff</h3>
-                <p>Creates channel-specific alert drafts from validated values while preserving a human approval checkpoint.</p>
+                <p>When a lab result is dangerously out of range, drafts the alert for each channel (patient record, text, phone, pager) and waits for a person to approve it before anything goes out.</p>
                 <div class="result-row">
                   <span><strong>2</strong> AI steps</span>
                   <span><strong>4</strong> channels</span>
@@ -480,7 +482,7 @@
                 <div class="screen-top"><span></span><span></span><span></span><strong>Clinical handoff / Synthetic case</strong></div>
                 <div class="lab-snapshot">
                   <div class="lab-result"><small>Validated result</small><strong>Serum potassium <b>2.7 mEq/L</b></strong><span>Requires acknowledgment</span></div>
-                  <div class="channel-list"><span>EHR draft <b>Ready</b></span><span>SMS draft <b>Ready</b></span><span>Phone script <b>Ready</b></span><span>Pager text <b>Ready</b></span></div>
+                  <div class="channel-list"><span>Record draft <b>Ready</b></span><span>SMS draft <b>Ready</b></span><span>Phone script <b>Ready</b></span><span>Pager text <b>Ready</b></span></div>
                   <div class="approval-footer"><div><small>Human review</small><strong>Confirm recipient and wording</strong></div><span class="approval-state">Awaiting approval</span></div>
                 </div>
               </div>
@@ -490,7 +492,7 @@
               <div class="project-copy">
                 <span class="case-kicker">Template · Clinical quality workflow</span>
                 <h3>Protocol deviation review</h3>
-                <p>Checks study rules, detects deviations, and classifies major or minor findings from context from the study PDF.</p>
+                <p>Checks each study visit against the study&rsquo;s rules, flags anything outside them, and marks each problem as major or minor, using the study document.</p>
                 <div class="result-row">
                   <span><strong>2</strong> AI steps</span>
                   <span><strong>2</strong> severities</span>
@@ -576,20 +578,15 @@
           <article class="process-card">
             <span>Step 1</span>
             <h3>Free Automation Audit</h3>
-            <p>A 30-minute call to find where the retyping happens.</p>
+            <p>A 30-minute call, then a one-page plan of the three automations that would save the most time.</p>
           </article>
           <article class="process-card">
             <span>Step 2</span>
-            <h3>Your one-page plan</h3>
-            <p>The three automations that would save the most time.</p>
-          </article>
-          <article class="process-card">
-            <span>Step 3</span>
             <h3>First Automation</h3>
             <p>One automation built and running, delivered in 2 weeks.</p>
           </article>
           <article class="process-card">
-            <span>Step 4</span>
+            <span>Step 3</span>
             <h3>Monthly Support</h3>
             <p>Monitoring, fixes, and small changes.</p>
           </article>

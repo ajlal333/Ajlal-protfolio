@@ -342,8 +342,11 @@ def build():
     st.append(
         steps(
             [
-                ("Free Automation Audit", "A 30-minute call to find where the retyping happens."),
-                ("Your one-page plan", "The three automations that would save the most time."),
+                (
+                    "Free Automation Audit",
+                    "A 30-minute call, then a one-page plan of the three automations that would save "
+                    "the most time.",
+                ),
                 ("First Automation", "One automation built and running, delivered in 2 weeks."),
                 ("Monthly Support", "Monitoring, fixes, and small changes."),
             ]
@@ -393,7 +396,7 @@ def build():
         systems_table(
             [
                 (
-                    "Finance operations ERP",
+                    "Finance operations system",
                     "Platform",
                     "Brings reimbursements, invoices, approvals, payments, and accounting entries into one "
                     "place, with the right access for each role and a full history of changes.",

@@ -1653,7 +1653,7 @@ h1 {
 
 .process-row {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
 }
 
@@ -2150,9 +2150,19 @@ h1 {
   box-shadow: 0 0 0 4px rgba(44, 111, 255, 0.12);
 }
 
+/* Spam trap: off-screen and hidden from assistive tech, but still in the DOM
+   and not display:none, because many bots skip fields that are not rendered. */
 .honeypot {
   position: absolute;
-  left: -9999px;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
 }
 
 .booking-actions {
@@ -2839,6 +2849,19 @@ h1 {
 .savings-result strong {
   font-size: 28px;
   line-height: 1.1;
+}
+
+.savings .field-hint {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+/* Desktop row: reserve the hint's height under both inputs so they line up. */
+@media (min-width: 1081px) {
+  .savings label {
+    grid-template-rows: auto auto 34px;
+  }
 }
 
 .savings-result small {
