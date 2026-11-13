@@ -17,6 +17,45 @@ function buildFallbackMailto(payload) {
   return `mailto:${bookingRecipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
+let toastTimer;
+
+/** Small confirmation card in the corner, announced to screen readers. */
+function showToast(title, message) {
+  let toast = document.getElementById('booking-toast');
+
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'booking-toast';
+    toast.className = 'toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
+    toast.innerHTML = `
+      <span class="toast-icon" aria-hidden="true">&#10003;</span>
+      <div class="toast-body"><strong></strong><p></p></div>
+      <button class="toast-close" type="button" aria-label="Dismiss notification">x</button>`;
+    toast.querySelector('.toast-close').addEventListener('click', () => hideToast(toast));
+    document.body.append(toast);
+  }
+
+  toast.querySelector('strong').textContent = title;
+  toast.querySelector('p').textContent = message;
+  toast.hidden = false;
+  requestAnimationFrame(() => {
+    toast.dataset.visible = 'true';
+  });
+
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => hideToast(toast), 7000);
+}
+
+function hideToast(toast) {
+  clearTimeout(toastTimer);
+  toast.dataset.visible = 'false';
+  setTimeout(() => {
+    if (toast.dataset.visible === 'false') toast.hidden = true;
+  }, 240);
+}
+
 export function initializeBooking({ defaultService = '' } = {}) {
   const bookingDialog = document.getElementById('booking-dialog');
   const bookingForm = document.getElementById('booking-form');
@@ -107,9 +146,11 @@ export function initializeBooking({ defaultService = '' } = {}) {
 
       bookingForm.reset();
       if (defaultService && serviceField) serviceField.value = defaultService;
-      setFormStatus(
-        'Request sent. Check your inbox for a confirmation. We reply within one business day to set a time for your audit call.',
-        'success'
+      setFormStatus('');
+      closeBookingDialog();
+      showToast(
+        'Request sent',
+        'Check your inbox for a confirmation. We reply within one business day to set a time for your audit call.'
       );
     } catch (error) {
       window.location.href = buildFallbackMailto(payload);

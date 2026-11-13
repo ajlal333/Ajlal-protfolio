@@ -202,7 +202,7 @@ def steps(items):
 
 
 def systems_table(rows):
-    head = ["System", "Domain", "What it does", "Shape"]
+    head = ["System", "Domain", "What it does", "Status"]
     data = [[Paragraph(f"<b>{h}</b>", S["tag"]) for h in head]]
     for name, domain, what, shape in rows:
         data.append(
@@ -216,7 +216,7 @@ def systems_table(rows):
 
     t = Table(
         data,
-        colWidths=[38 * mm, 24 * mm, 74 * mm, 34 * mm],
+        colWidths=[38 * mm, 24 * mm, 86 * mm, 22 * mm],
         repeatRows=1,
     )
     t.setStyle(
@@ -289,35 +289,50 @@ def build():
     )
     st.append(
         Paragraph(
-            "We build the software around the workflow, not just the prompt: bounded agent behaviour, "
-            "traceable inputs, explicit decision paths, and human approval gates where a decision "
-            "carries real consequences.",
+            "We build each automation around the way your business already works, keep a person in "
+            "charge of the decisions that matter, and make sure you can see what happened at every step.",
             S["body"],
         )
     )
     st += rule(6, 10)
 
-    st.append(Paragraph("WHAT WE BUILD", S["eyebrow"]))
+    st.append(Paragraph("WHAT GETS AUTOMATED", S["eyebrow"]))
     st.append(Spacer(1, 3))
     st.append(
         cards(
             [
                 (
-                    "Agentic orchestration",
-                    "Coordinate agents and people across complex operations, with the handoffs made explicit.",
-                    ["Business rules", "Human review", "Audit trails"],
+                    "Enquiry follow-ups",
+                    "Every new enquiry gets a follow-up automatically, so no lead goes quiet because "
+                    "someone was busy.",
+                    [],
                 ),
                 (
-                    "Decision intelligence",
-                    "Turn documents and business context into bounded, explainable decisions.",
-                    ["Extraction", "Grounding", "Validation"],
+                    "Invoices when a deal is won",
+                    "The invoice is created the moment a deal is won, from details you already entered.",
+                    [],
+                ),
+            ],
+            cols=2,
+        )
+    )
+    st.append(Spacer(1, 6))
+    st.append(
+        cards(
+            [
+                (
+                    "Payment reminders",
+                    "Reminders send themselves, so overdue invoices get chased without anyone having "
+                    "to remember.",
+                    [],
                 ),
                 (
-                    "Platforms and integrations",
-                    "Ship the software around the workflow so it runs inside the systems you already use.",
-                    ["FastAPI", "MCP and APIs", "Deployment"],
+                    "A weekly report",
+                    "One report arrives every week, with no copy and paste.",
+                    [],
                 ),
-            ]
+            ],
+            cols=2,
         )
     )
     st += rule(10, 10)
@@ -327,22 +342,22 @@ def build():
     st.append(
         steps(
             [
-                ("Discover", "Workflow, friction, risk, and the success metric."),
-                ("Orchestrate", "Agents, rules, decisions, and human review."),
-                ("Integrate", "Data, APIs, systems, and the product surface."),
-                ("Prove and launch", "Evaluate, deploy, hand off, improve."),
+                ("Free Automation Audit", "A 30-minute call to find where the retyping happens."),
+                ("Your one-page plan", "The three automations that would save the most time."),
+                ("First Automation", "One automation built and running, delivered in 2 weeks."),
+                ("Monthly Support", "Monitoring, fixes, and small changes."),
             ]
         )
     )
 
     st += rule(12, 10)
-    st.append(Paragraph("TECHNICAL FOUNDATION", S["eyebrow"]))
+    st.append(Paragraph("WORKS WITH YOUR TOOLS", S["eyebrow"]))
     st.append(Spacer(1, 3))
 
     groups = [
-        ("Orchestration", "UiPath Maestro, agentic workflows, human-in-the-loop review"),
-        ("Models and grounding", "Gemini, LLM APIs, RAG pipelines, evaluation harnesses"),
-        ("Systems", "FastAPI, MCP and API integrations, PostgreSQL, Docker, Playwright"),
+        ("Odoo", "Connected to your sales and accounting"),
+        ("Zoho", "Connected to your sales and accounting"),
+        ("Custom-built", "Tools and integrations, when no off-the-shelf tool fits"),
     ]
     gt = Table(
         [[Paragraph(f"<b>{k}</b>", S["cardb"]), Paragraph(v, S["cardb"])] for k, v in groups],
@@ -361,12 +376,11 @@ def build():
     )
     st.append(gt)
 
-
     st.append(PageBreak())
 
     # ---------------- Page 2 ----------------
     st.append(Paragraph("SELECTED SYSTEMS", S["eyebrow"]))
-    st.append(Paragraph("Workflow designs and platforms we have built.", S["h2"]))
+    st.append(Paragraph("What we have built.", S["h2"]))
     st.append(
         Paragraph(
             "Every build is labeled a Prototype or a Template. Sales and finance builds come first. "
@@ -381,43 +395,43 @@ def build():
                 (
                     "Finance operations ERP",
                     "Platform",
-                    "Centralises reimbursements, invoices, approvals, payments, journals, and intercompany "
-                    "work with role-based access and audit history.",
+                    "Brings reimbursements, invoices, approvals, payments, and accounting entries into one "
+                    "place, with the right access for each role and a full history of changes.",
                     "Prototype",
                 ),
                 (
                     "AI opportunity research",
                     "Sales",
-                    "Researches each lead, grounds a real business problem, and scores the best-fit AI "
-                    "solution before outreach. Gemini-powered.",
+                    "Researches each sales lead, finds a real business problem, and scores the best-fit "
+                    "solution before anyone reaches out.",
                     "Prototype",
                 ),
                 (
-                    "Role-based network intelligence",
+                    "Network research",
                     "Growth",
-                    "Filters reputable employers for a target role across 1,794 connections, maps verified "
-                    "first-degree routes, and drafts grounded outreach. Daily caching, 9 automated tests.",
+                    "Finds reputable employers for a target role across 1,794 connections, maps verified "
+                    "direct introductions, and drafts evidence-based outreach. Covered by 9 automated tests.",
                     "Prototype",
                 ),
                 (
                     "Benefits claim verification",
                     "Public sector",
-                    "Combines residency, income, and eligibility checks into one explainable decision "
-                    "workflow with a grounded rationale.",
+                    "Combines residency, income, and eligibility checks into one clear decision, with the "
+                    "reasons written down.",
                     "Prototype",
                 ),
                 (
-                    "Denial appeal orchestration",
+                    "Denial appeal workflow",
                     "Healthcare",
-                    "Coordinates intake, extraction, code confirmation, policy research, evidence matching, "
-                    "review, and submission across 19 nodes with 3 evaluators.",
+                    "Takes an insurance denial from intake to submission, with a person reviewing before "
+                    "it is sent. 19 steps, 3 quality checks.",
                     "Template",
                 ),
                 (
                     "Prior authorization package",
                     "Healthcare",
-                    "Maps clinical evidence to payer criteria, drafts the request, and routes it through "
-                    "review and submission across 5 stages.",
+                    "Matches clinical evidence to the insurance criteria, drafts the request, and sends it "
+                    "for review before submission. 5 stages.",
                     "Template",
                 ),
                 (
@@ -429,8 +443,8 @@ def build():
                 (
                     "Protocol deviation review",
                     "Clinical quality",
-                    "Checks study rules, detects deviations, and classifies major or minor findings from "
-                    "PDF-grounded context.",
+                    "Checks visits against the study rules, flags anything outside them, and marks each "
+                    "finding as major or minor, using the study document.",
                     "Template",
                 ),
             ]
@@ -473,12 +487,13 @@ def build():
 
     contact = Table(
         [
-            [Paragraph("<b>Email</b>", S["cardb"]), Paragraph("ajlalgoraya333@gmail.com", S["cardb"])],
+            [Paragraph("<b>Email</b>", S["cardb"]), Paragraph("ajlal@logicfolds.com", S["cardb"])],
+            [Paragraph("<b>LinkedIn</b>", S["cardb"]), Paragraph("linkedin.com/in/ajlalgoraya", S["cardb"])],
             [Paragraph("<b>Founder</b>", S["cardb"]), Paragraph("Muhammad Ajlal Haider", S["cardb"])],
             [
                 Paragraph("<b>Background</b>", S["cardb"]),
                 Paragraph(
-                    "4+ years building and deploying AI and backend systems in production.",
+                    "4+ years of experience building software and automations that connect the systems businesses run on.",
                     S["cardb"],
                 ),
             ],

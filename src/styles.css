@@ -2033,8 +2033,8 @@ h1 {
 
 .booking-close {
   position: absolute;
-  top: 18px;
-  right: 18px;
+  top: 10px;
+  right: 10px;
   z-index: 2;
   display: grid;
   width: 40px;
@@ -2080,6 +2080,8 @@ h1 {
   display: grid;
   align-content: center;
   gap: 18px;
+  /* Keeps the first row of fields clear of the close button above it. */
+  padding-top: 40px;
 }
 
 .form-grid {
@@ -2570,8 +2572,8 @@ h1 {
   }
 
   .booking-close {
-    top: 16px;
-    right: 16px;
+    top: 12px;
+    right: 12px;
     width: 36px;
     height: 36px;
   }
@@ -2595,6 +2597,7 @@ h1 {
 
   .booking-form {
     gap: 12px;
+    padding-top: 0;
   }
 
   .form-grid {
@@ -2971,4 +2974,87 @@ h1 {
 
 .contact-links a:hover {
   color: var(--blue-dark);
+}
+
+/* Confirmation shown after the booking dialog closes on a successful send. */
+.toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 60;
+  display: flex;
+  max-width: min(420px, calc(100vw - 32px));
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 16px 16px 20px;
+  color: var(--white);
+  background: var(--ink);
+  border-radius: 18px;
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.24);
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.toast[data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+.toast-icon {
+  display: grid;
+  flex: none;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  color: var(--ink);
+  background: #9fe5c0;
+  border-radius: 999px;
+  font-weight: 900;
+}
+
+.toast-body strong {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 15px;
+}
+
+.toast-body p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.toast-close {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  color: rgba(255, 255, 255, 0.74);
+  background: rgba(255, 255, 255, 0.1);
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+.toast-close:hover {
+  color: var(--white);
+}
+
+@media (max-width: 760px) {
+  .toast {
+    right: 16px;
+    bottom: 16px;
+    left: 16px;
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    transition: none;
+  }
 }
