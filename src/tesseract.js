@@ -51,7 +51,6 @@ export function startTesseract(canvas, getColor) {
     amber: new Color('#ffb454'),
     mint: new Color('#34c9a5'),
     coral: new Color('#ff6b6b'),
-    ink: new Color('#181818'),
   };
   const pointer = new Vector2();
   const target = new Vector2();

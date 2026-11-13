@@ -1,16 +1,16 @@
 const bookingRecipient = 'ajlal@logicfolds.com';
 
 function buildFallbackMailto(payload) {
-  const subject = `LogicFolds inquiry from ${payload.company || payload.name}`;
+  const subject = `Free automation audit request from ${payload.company || payload.name}`;
   const body = [
-    'New LogicFolds inquiry',
+    'New free automation audit request',
     '',
     `Name: ${payload.name}`,
     `Email: ${payload.email}`,
     `Company: ${payload.company || 'Not provided'}`,
-    `Service: ${payload.service || 'LogicFolds project inquiry'}`,
+    `Service: ${payload.service || 'Free Automation Audit'}`,
     '',
-    'What they want to improve:',
+    'Task that takes the most retyping:',
     payload.message,
   ].join('\n');
 
@@ -24,8 +24,9 @@ export function initializeBooking({ defaultService = '' } = {}) {
 
   if (!bookingDialog || !bookingForm) return;
 
-  const serviceSelect = bookingForm.elements.namedItem('service');
-  if (defaultService && serviceSelect) serviceSelect.value = defaultService;
+  // Hidden field that tells the owner which page the request came from.
+  const serviceField = bookingForm.elements.namedItem('service');
+  if (defaultService && serviceField) serviceField.value = defaultService;
 
   function setFormStatus(message, tone = 'neutral') {
     if (!formStatus) return;
@@ -79,7 +80,7 @@ export function initializeBooking({ defaultService = '' } = {}) {
     if (payload.companyFax) return;
 
     submitButton.disabled = true;
-    setFormStatus('Sending your call request...', 'neutral');
+    setFormStatus('Sending your audit request...', 'neutral');
 
     try {
       const response = await fetch('/api/book-call', {
@@ -105,9 +106,9 @@ export function initializeBooking({ defaultService = '' } = {}) {
       }
 
       bookingForm.reset();
-      if (defaultService && serviceSelect) serviceSelect.value = defaultService;
+      if (defaultService && serviceField) serviceField.value = defaultService;
       setFormStatus(
-        'Request sent — check your inbox for a confirmation. We reply within one business day to set up a call.',
+        'Request sent. Check your inbox for a confirmation. We reply within one business day to set a time for your audit call.',
         'success'
       );
     } catch (error) {

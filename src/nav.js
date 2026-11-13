@@ -2,8 +2,8 @@
  * Compact-viewport navigation menu.
  *
  * The nav links are hidden by CSS below 1080px (980px on the offer page). Without
- * this, a phone or tablet visitor has no way to reach Services, Work, Blog,
- * Support Sprint or Credentials. This turns the hidden link list into a
+ * this, a phone or tablet visitor has no way to reach Services, Pricing, Work,
+ * Blog or the capabilities PDF. This turns the hidden link list into a
  * disclosure panel driven by the pill's own toggle button.
  *
  * Works for both nav layouts by matching on data attributes rather than classes.

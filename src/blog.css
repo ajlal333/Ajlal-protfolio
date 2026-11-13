@@ -615,3 +615,106 @@
     padding: 34px 16px;
   }
 }
+
+/* ---- Byline and email signup ---- */
+
+.article-byline {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.article-byline span {
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.blog-signup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: center;
+  max-width: 960px;
+  margin: 32px auto 0;
+  padding: 36px 40px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.blog-index-view > .blog-signup {
+  max-width: none;
+  margin-top: 48px;
+}
+
+.blog-signup h2 {
+  margin: 0 0 8px;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.1;
+}
+
+.blog-signup p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.blog-signup .eyebrow {
+  margin-bottom: 10px;
+}
+
+.blog-signup form {
+  display: grid;
+  gap: 12px;
+}
+
+.blog-signup label {
+  display: grid;
+  gap: 8px;
+}
+
+.blog-signup label span {
+  color: #343434;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.blog-signup input[type="email"] {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 16px;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  outline: none;
+  font: inherit;
+}
+
+.blog-signup input[type="email"]:focus {
+  border-color: rgba(44, 111, 255, 0.56);
+  box-shadow: 0 0 0 4px rgba(44, 111, 255, 0.12);
+}
+
+.blog-signup .button {
+  justify-self: start;
+  padding: 0 28px;
+}
+
+@media (max-width: 760px) {
+  .blog-signup {
+    grid-template-columns: 1fr;
+    padding: 28px 22px;
+  }
+}
+
+.blog-footer .contact-links {
+  margin: 0;
+}
+
+.blog-footer .contact-links a {
+  color: var(--blue);
+  font-size: 15px;
+  font-weight: 750;
+}

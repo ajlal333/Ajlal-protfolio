@@ -26,10 +26,10 @@
         </a>
         <div class="nav-links" id="nav-menu">
           <a href="/#services">Services</a>
+          <a href="/#pricing">Pricing</a>
           <a href="/#work">Work</a>
-          <a class="current" href="/blog/">Blog</a>
-          <a href="/opportunity-sprint/">Support Sprint</a>
-          <a href="/LogicFolds_Credentials.pdf" target="_blank" rel="noreferrer">Credentials</a>
+          <a class="current" href="/blog/" aria-current="page">Blog</a>
+          <a href="/LogicFolds_Credentials.pdf" target="_blank" rel="noreferrer">Capabilities</a>
         </div>
         <button
           class="nav-toggle"
@@ -42,7 +42,7 @@
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
         </button>
-        <button class="nav-cta" type="button" data-open-booking>Start a project</button>
+        <button class="nav-cta" type="button" data-open-booking>Book a free automation audit</button>
       </div>
     </nav>
 
@@ -50,16 +50,20 @@
 
     <footer class="blog-footer">
       <a href="/">LogicFolds</a>
-      <span>Practical AI systems for business operations.</span>
+      <span>Automation from first enquiry to paid invoice.</span>
+      <p class="contact-links">
+        <a href="mailto:ajlal@logicfolds.com">ajlal@logicfolds.com</a>
+        <a href="https://www.linkedin.com/in/ajlalgoraya/" target="_blank" rel="noreferrer">LinkedIn</a>
+      </p>
     </footer>
 
     <dialog class="booking-dialog" id="booking-dialog" aria-labelledby="booking-title">
       <div class="booking-panel">
         <button class="booking-close" type="button" data-close-booking aria-label="Close booking form">x</button>
         <div class="booking-intro">
-          <p class="eyebrow">Start a conversation</p>
-          <h2 id="booking-title">What would you like to improve?</h2>
-          <p>A short note is enough. We will arrange the call by email.</p>
+          <p class="eyebrow">Free Automation Audit</p>
+          <h2 id="booking-title">Book a free automation audit</h2>
+          <p>A 30-minute call plus a one-page plan of the three automations that would save the most time. A short note is enough, and we will reply by email to set a time.</p>
         </div>
 
         <form class="booking-form" id="booking-form">
@@ -79,16 +83,16 @@
           </div>
 
           <label>
-            <span>What would you like to improve?</span>
+            <span>Which task takes the most retyping?</span>
             <textarea
               name="message"
               rows="4"
-              placeholder="A repeated process, delay, backlog, or quality problem..."
+              placeholder="For example: copying new enquiries into a spreadsheet, or building invoices by hand..."
               required
             ></textarea>
           </label>
 
-          <input name="service" type="hidden" value="LogicFolds blog inquiry" />
+          <input name="service" type="hidden" value="Free Automation Audit" />
           <label class="honeypot" aria-hidden="true">
             <span>Leave this field empty</span>
             <input name="companyFax" type="text" tabindex="-1" autocomplete="off" />

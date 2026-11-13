@@ -11,9 +11,7 @@ No invented clients, deployments, benchmarks, testimonials or results.
 Regenerate with:  python3 scripts/build-credentials.py
 """
 
-import io
-
-import cairosvg
+from reportlab.graphics.shapes import Drawing, Path, Rect, String
 from reportlab.lib.colors import HexColor
 from reportlab.lib.enums import TA_LEFT
 from reportlab.lib.pagesizes import A4
@@ -22,7 +20,6 @@ from reportlab.lib.units import mm
 from reportlab.platypus import (
     BaseDocTemplate,
     Frame,
-    Image,
     KeepTogether,
     PageBreak,
     PageTemplate,
@@ -42,8 +39,39 @@ LINE = HexColor("#e2ded2")
 PAGE_W, PAGE_H = A4
 M = 20 * mm
 
-# The favicon, rasterised once so the mark always matches the site.
-MARK = io.BytesIO(cairosvg.svg2png(url="public/favicon.svg", output_width=160, output_height=160))
+def brand_mark(size):
+    """The favicon, redrawn as vectors so the PDF needs no SVG renderer."""
+    d = Drawing(64, 64)
+    d.add(Rect(0, 0, 64, 64, rx=16, ry=16, fillColor=HexColor("#181818"), strokeColor=None))
+
+    def shape(points, fill, opacity=1):
+        path = Path(fillColor=HexColor(fill), strokeColor=None, fillOpacity=opacity)
+        path.moveTo(*points[0])
+        for seg in points[1:]:
+            if len(seg) == 2:
+                path.lineTo(*seg)
+            else:
+                path.curveTo(*seg)
+        path.closePath()
+        d.add(path)
+
+    # SVG y runs down; flip into reportlab's y-up space.
+    f = lambda x, y: (x, 64 - y)
+    shape(
+        [f(17, 16), f(35, 16), (*f(43, 16), *f(49, 22), *f(49, 30)), f(49, 48), f(31, 48),
+         (*f(23, 48), *f(17, 42), *f(17, 34))],
+        "#2c6fff",
+    )
+    shape(
+        [f(27, 24), f(37, 24), (*f(42, 24), *f(46, 28), *f(46, 33)), f(46, 40), f(36, 40),
+         (*f(31, 40), *f(27, 36), *f(27, 31))],
+        "#fcfbf3",
+        0.95,
+    )
+    d.add(String(16, 64 - 47, "LF", fontName="Helvetica-Bold", fontSize=17, fillColor=HexColor("#fcfbf3")))
+    d.scale(size / 64, size / 64)
+    d.width = d.height = size
+    return d
 
 
 def style(name, size, leading, color=INK, font="Helvetica", space_after=0, space_before=0):
@@ -217,7 +245,7 @@ def build():
         bottomMargin=20 * mm,
         title="LogicFolds Capabilities",
         author="LogicFolds",
-        subject="Practical AI systems for business operations",
+        subject="Automations for sales and accounting workflows",
     )
     doc.addPageTemplates(
         PageTemplate(
@@ -230,7 +258,7 @@ def build():
     st = []
 
     # ---------------- Page 1 ----------------
-    logo = Image(MARK, width=13 * mm, height=13 * mm)
+    logo = brand_mark(13 * mm)
     header = Table(
         [[logo, Paragraph('<font size="15"><b>LogicFolds</b></font>', S["h2"])]],
         colWidths=[16 * mm, None],
@@ -248,13 +276,14 @@ def build():
     st += [header, Spacer(1, 22 * mm)]
 
     st.append(Paragraph("CAPABILITIES", S["eyebrow"]))
-    st.append(Paragraph("Practical AI systems<br/>that save teams time.", S["hero"]))
+    st.append(Paragraph("From first enquiry to paid invoice,<br/>without the retyping.", S["hero"]))
     st.append(Spacer(1, 4))
     st.append(
         Paragraph(
-            "LogicFolds combines AI agents, human review, and production software to make complex "
-            "operations easier to run. We work with business owners and operations leaders who have a "
-            "repeated process that is slow, document-heavy, or dependent on scarce expert attention.",
+            "LogicFolds builds automations for home service companies and real estate agencies that lose "
+            "time moving information between their sales and accounting systems. We work with business "
+            "owners who have a repeated process that is slow, manual, or dependent on one person "
+            "remembering to do it.",
             S["body"],
         )
     )
@@ -340,9 +369,8 @@ def build():
     st.append(Paragraph("Workflow designs and platforms we have built.", S["h2"]))
     st.append(
         Paragraph(
-            "The shape column is deliberate. Several of these are reusable workflow templates and "
-            "prototypes rather than live clinical or production deployments, and the interface views on "
-            "our site use synthetic, anonymised data.",
+            "Every build is labeled a Prototype or a Template. Sales and finance builds come first. "
+            "The interface views on our site use synthetic, anonymised data.",
             S["muted"],
         )
     )
@@ -351,59 +379,59 @@ def build():
         systems_table(
             [
                 (
-                    "Denial appeal orchestration",
-                    "Healthcare",
-                    "Coordinates intake, extraction, code confirmation, policy research, evidence matching, "
-                    "review, and submission across 19 nodes with 3 evaluators.",
-                    "Workflow template",
-                ),
-                (
-                    "Role-based network intelligence",
-                    "Growth",
-                    "Filters reputable employers for a target role across 1,794 connections, maps verified "
-                    "first-degree routes, and drafts grounded outreach. Daily caching, 9 automated tests.",
-                    "Working system",
+                    "Finance operations ERP",
+                    "Platform",
+                    "Centralises reimbursements, invoices, approvals, payments, journals, and intercompany "
+                    "work with role-based access and audit history.",
+                    "Prototype",
                 ),
                 (
                     "AI opportunity research",
                     "Sales",
                     "Researches each lead, grounds a real business problem, and scores the best-fit AI "
                     "solution before outreach. Gemini-powered.",
-                    "Working system",
+                    "Prototype",
+                ),
+                (
+                    "Role-based network intelligence",
+                    "Growth",
+                    "Filters reputable employers for a target role across 1,794 connections, maps verified "
+                    "first-degree routes, and drafts grounded outreach. Daily caching, 9 automated tests.",
+                    "Prototype",
                 ),
                 (
                     "Benefits claim verification",
                     "Public sector",
                     "Combines residency, income, and eligibility checks into one explainable decision "
                     "workflow with a grounded rationale.",
-                    "Grounded workflow",
+                    "Prototype",
+                ),
+                (
+                    "Denial appeal orchestration",
+                    "Healthcare",
+                    "Coordinates intake, extraction, code confirmation, policy research, evidence matching, "
+                    "review, and submission across 19 nodes with 3 evaluators.",
+                    "Template",
                 ),
                 (
                     "Prior authorization package",
                     "Healthcare",
                     "Maps clinical evidence to payer criteria, drafts the request, and routes it through "
                     "review and submission across 5 stages.",
-                    "Workflow design",
+                    "Template",
                 ),
                 (
                     "Critical lab alert handoff",
                     "Clinical",
                     "Routes urgent results to the right responder with acknowledgement and escalation.",
-                    "Workflow design",
+                    "Template",
                 ),
                 (
                     "Protocol deviation review",
                     "Clinical quality",
                     "Checks study rules, detects deviations, and classifies major or minor findings from "
                     "PDF-grounded context.",
-                    "Workflow design",
-                ),
-                (
-                    "Finance operations ERP",
-                    "Platform",
-                    "Centralises reimbursements, invoices, approvals, payments, journals, and intercompany "
-                    "work with role-based access and audit history.",
-                    "Full-stack platform",
+                    "Template",
                 ),
             ]
         )
@@ -411,25 +439,28 @@ def build():
 
     st += rule(9, 7)
     st.append(Paragraph("WORKING TOGETHER", S["eyebrow"]))
-    st.append(Paragraph("Two ways to start.", S["h2"]))
+    st.append(Paragraph("Three ways to work together.", S["h2"]))
     st.append(Spacer(1, 5))
     st.append(
         cards(
             [
                 (
-                    "AI Support Workflow Sprint",
-                    "For IT services and support teams. We turn one repeated ticket process into a "
-                    "build-ready, human-supervised AI workflow with a clear implementation path.",
-                    ["Scoped", "Decision package"],
+                    "Free Automation Audit",
+                    "A 30-minute call plus a one-page plan of the three automations that would save the "
+                    "most time. Free.",
+                    ["Free"],
                 ),
                 (
-                    "Full build",
-                    "Start from a validated template, then harden it with APIs, auth, auditability, "
-                    "evaluations, and deployment until it runs as a dependable system.",
-                    ["Design to production"],
+                    "First Automation",
+                    "One automation built and running. Fixed price and fixed delivery time.",
+                    ["USD 1,200", "Delivered in 2 weeks"],
                 ),
-            ],
-            cols=2,
+                (
+                    "Monthly Support",
+                    "Monitoring, fixes, and small changes.",
+                    ["USD 250 per month"],
+                ),
+            ]
         )
     )
 
@@ -447,7 +478,7 @@ def build():
             [
                 Paragraph("<b>Background</b>", S["cardb"]),
                 Paragraph(
-                    "3+ years building and deploying AI and backend systems in production.",
+                    "4+ years building and deploying AI and backend systems in production.",
                     S["cardb"],
                 ),
             ],

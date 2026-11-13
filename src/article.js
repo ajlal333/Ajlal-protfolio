@@ -9,8 +9,8 @@ const articleTitle = document.body.dataset.articleTitle;
 
 initializeBooking({
   defaultService: articleTitle
-    ? `Blog inquiry: ${articleTitle}`
-    : 'LogicFolds blog inquiry',
+    ? `Free Automation Audit (from blog: ${articleTitle})`
+    : 'Free Automation Audit',
 });
 
 function updateNavigation() {
@@ -43,3 +43,59 @@ if (filters) {
     });
   });
 }
+
+// Email signup: posts to the same endpoint as the booking form, which emails
+// the owner. No account or third-party list is involved.
+document.querySelectorAll('[data-blog-signup]').forEach((form) => {
+  const status = form.querySelector('[data-signup-status]');
+  const button = form.querySelector('button[type="submit"]');
+
+  function setStatus(message, tone) {
+    if (!status) return;
+    status.textContent = message;
+    status.dataset.tone = tone;
+  }
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const payload = Object.fromEntries(new FormData(form).entries());
+    if (payload.companyFax) return;
+
+    const emailField = form.elements.namedItem('email');
+    if (emailField && !emailField.checkValidity()) {
+      setStatus('Please enter a valid email address.', 'warning');
+      emailField.focus();
+      return;
+    }
+
+    button.disabled = true;
+    setStatus('Adding you to the list...', 'neutral');
+
+    try {
+      const response = await fetch('/api/book-call', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          kind: 'signup',
+          email: payload.email,
+          service: 'Blog email signup',
+          source: window.location.pathname,
+          companyFax: payload.companyFax,
+        }),
+      });
+      const details = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        setStatus(details.error || 'Something went wrong. Please try again.', 'warning');
+        return;
+      }
+
+      form.reset();
+      setStatus('Thanks. You are on the list.', 'success');
+    } catch {
+      setStatus('We could not reach the server. Please try again in a moment.', 'warning');
+    } finally {
+      button.disabled = false;
+    }
+  });
+});

@@ -5,9 +5,13 @@ Working context for coding agents. This is the current source of truth for the p
 ## 1. Project
 
 - **What:** LogicFolds is a business-facing AI automation studio website. It is not a personal portfolio, and must not become a resume page unless the user asks.
-- **Audience:** business owners and operators who want AI systems for real workflows.
-- **Offer:** agentic workflow orchestration, grounded decision systems, AI platforms and integrations.
-- **Primary CTA:** book a strategy/project call; the Opportunity Sprint (`/opportunity-sprint/`) is the main offer page.
+- **Audience:** physical, non-technical businesses (home service companies, real estate agencies) that lose time moving information between sales and accounting systems. Not IT support teams.
+- **Offer ladder (use these exact names, no others):** "Free Automation Audit" (30-minute call plus a one-page plan of the three automations that would save the most time), "First Automation" (USD 1,200, delivered in 2 weeks), "Monthly Support" (USD 250 per month: monitoring, fixes, small changes).
+- **Primary CTA everywhere:** "Book a free automation audit", which opens the booking dialog.
+- **Homepage language:** describe results, not technology. Never use agentic, HITL, MCP, RAG, grounding, evaluators or nodes on the homepage, and name CRM, accounting and tools (Odoo, Zoho, custom-built) only in "Works with your tools". Technical detail belongs in the capabilities PDF. Mention no location.
+- **Retired offer:** `/opportunity-sprint/` still works so old links do not break, but nothing links to it and it is out of the sitemap.
+- **Founder:** Muhammad Ajlal Haider, 4+ years. Keep the years number identical on the site and in the PDF (`scripts/build-credentials.py`).
+- **Build labels:** every build is "Prototype" or "Template" (matching the PDF); none is labeled "Live deployment" unless the user says so. The 30% throughput claim was removed because it had no stated source.
 - **Repo:** https://github.com/ajlal333/Ajlal-protfolio (production branch: `main`)
 - **Live:** https://logicfolds.com (Netlify, site id `2e52c233-f33a-43da-8750-70aa1ac752fa`, free plan)
 - **Owner email:** ajlalgoraya333@gmail.com
@@ -56,12 +60,16 @@ Production needs none of this; all env vars are set in Netlify.
 | Blog publish (keyed) | `scripts/publish-one.mjs` (needs `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY`) |
 | Blog publish (env-free) | `scripts/validate-draft.mjs` validates a draft, verifies sources, prints an INSERT. Used by the daily cloud routine. |
 | Blog sync | `scripts/sync-posts.mjs` (`npm run posts:push` / `posts:pull`) |
-| Opportunity Sprint | `opportunity-sprint/index.html`, `src/opportunity-sprint.{js,css}` |
+| Retired Opportunity Sprint | `opportunity-sprint/index.html`, `src/opportunity-sprint.{js,css}` (kept for old links only) |
+| Blog categories and byline | `lib/blog-source.mjs` folds the 26+ stored categories into 7 for display and bylines every post to the founder, so database rows are untouched |
+| Blog email signup | `[data-blog-signup]` forms (`src/article.js`) post `kind: 'signup'` to `/api/book-call`, which emails the owner. No list provider. |
 | Analytics | `src/analytics.js` (env-gated PostHog, US host, CDN-loaded, off on localhost) |
 | Shared nav | `src/nav.js` |
 | Vercel booking handler | `api/book-call.js`: unused on Netlify, kept for a possible future Vercel move |
 | Schema | `supabase/schema.sql`, `supabase/README.md` |
-| Assets | `public/` (favicon, og-cover, workflow demo preview, `LogicFolds_Credentials.pdf`, self-hosted `fonts/`) |
+| Assets | `public/` (favicon, og-cover, workflow demo preview, `founder.jpg`, `LogicFolds_Credentials.pdf`, self-hosted `fonts/`) |
+| Capabilities PDF | `python3 scripts/build-credentials.py` (needs `reportlab` only) writes `public/LogicFolds_Credentials.pdf`; the nav item is called "Capabilities" |
+| Demo video slot | `#demo` in `index.html` is `hidden`; set the iframe `src` and remove `hidden` when a URL exists |
 | Archived resumes | `unpublished/`. Do not delete without the user's confirmation. |
 
 ### Blog mechanics
@@ -72,7 +80,7 @@ Posts live in a Supabase `posts` table and are server-rendered per request by Ne
 - RLS: the `anon` key reads only `status='published' AND published<=today`. Writes need `service_role`, server-side only.
 - If Supabase is unconfigured, paused or down, the functions serve `content/blog-posts.json` and drop the CDN TTL to 60s. Preserve this fallback.
 - The homepage blog strip renders the bundled snapshot first, then refreshes from Supabase with the anon key.
-- The article CTA links to `/opportunity-sprint/`.
+- The article CTA and rail button open the booking dialog ("Book a free automation audit"). Each article and the index end with an email signup.
 
 ### Booking flow
 
@@ -98,7 +106,7 @@ Posts live in a Supabase `posts` table and are server-rendered per request by Ne
 - **Bundle size:** Three.js is the dominant cost. Keep it as named imports in `src/tesseract.js`, lazily loaded, and do not add large dependencies.
 - **Blog editorial:** write for business owners and operators evaluating practical AI (orchestration, decision controls, integrations, evaluation, operations, measurable lessons). Verify every source URL resolves before citing. Keep claims factual and traceable, and preserve client confidentiality. `scripts/validate-blog.mjs` and the DB constraints enforce: required fields, unique kebab-case slugs, YYYY-MM-DD dates, newest first, no future dates, at least 2 takeaways, at least 3 sections, at least 1 absolute-URL source, at most 2 posts per date, title at most 70 characters, excerpt at most 165.
 - **Git:** stage explicit paths, never `git add -A`. `.agents/`, `_to_delete/` and `.investigation/` are scratch; never stage them. Do not force-push.
-- **Project library:** the work explorer prioritizes business systems and workflow designs (healthcare denial appeals, role-based networking intelligence, Gemini opportunity research, benefits verification, prior authorization, critical lab alerts, protocol deviation review, finance ERP). The compact archive keeps GitHub links for AuraAI, Audioscript, the RunPod video editor and Azmuth. The work tabs and panels use paired ARIA attributes; keep them paired.
+- **Project library:** the work explorer prioritizes business systems and workflow designs (healthcare denial appeals, role-based networking intelligence, Gemini opportunity research, benefits verification, prior authorization, critical lab alerts, protocol deviation review, finance ERP). The earlier GitHub product archive (AuraAI, Audioscript, RunPod editor, Azmuth) was removed from the homepage because those builds have no Prototype/Template label yet. The work tabs and panels use paired ARIA attributes; keep them paired.
 - **Visual direction:** cream background, dark pill navigation, blue primary accents, compact rounded UI, interactive Three.js tesseract background, screenshot-style operational surfaces.
 - **Console noise:** errors mentioning `sw.js`, `mobx-state-tree`, `ContentService` or `host-network-events.js` come from browser extensions, not this site.
 

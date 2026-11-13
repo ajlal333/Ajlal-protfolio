@@ -1,5 +1,6 @@
 import './styles.css';
 import blogContent from '../content/blog-posts.json';
+import { groupCategory } from '../lib/blog-source.mjs';
 import { initializeBooking } from './booking.js';
 import { initializeNavMenu } from './nav.js';
 import { initAnalytics } from './analytics.js';
@@ -9,18 +10,18 @@ initAnalytics();
 const solutionCopy = {
   automation: {
     color: '#2c6fff',
-    title: 'Agentic workflows for business operations',
-    copy: 'Coordinate agents, business rules, integrations, and human review in one dependable flow.',
+    title: 'Enquiries that get a follow-up automatically',
+    copy: 'Every new enquiry gets a prompt, consistent reply, and nobody has to remember to send it.',
   },
   extraction: {
     color: '#ffb454',
-    title: 'Grounded decision intelligence',
-    copy: 'Turn documents and business context into traceable, bounded decisions.',
+    title: 'Invoices created when a deal is won',
+    copy: 'The moment a deal is won, the invoice is created from details you already entered. No retyping.',
   },
   platform: {
     color: '#34c9a5',
-    title: 'AI platforms and integrations',
-    copy: 'Connect workflows to APIs, MCP tools, dashboards, auth, and deployment.',
+    title: 'Payment reminders that send themselves',
+    copy: 'Overdue invoices get a polite reminder on schedule, so nobody has to chase by hand.',
   },
 };
 
@@ -35,13 +36,46 @@ function setSolution(solution) {
   activeSolution = solution;
   const data = solutionCopy[solution];
   document.querySelectorAll('[data-solution]').forEach((element) => {
-    element.classList.toggle('active', element.dataset.solution === solution);
+    const isActive = element.dataset.solution === solution;
+    element.classList.toggle('active', isActive);
+    element.setAttribute('aria-pressed', String(isActive));
   });
   setText('solution-title', data.title);
   setText('solution-copy', data.copy);
 }
 
 initializeBooking();
+
+// Savings estimate: hours per week x hourly cost x 52 weeks / 12 months.
+const savingsHours = document.getElementById('savings-hours');
+const savingsRate = document.getElementById('savings-rate');
+const savingsTotal = document.getElementById('savings-total');
+const currency = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+  maximumFractionDigits: 0,
+});
+
+function updateSavings() {
+  if (!savingsHours || !savingsRate || !savingsTotal) return;
+  const hours = Number.parseFloat(savingsHours.value);
+  const rate = Number.parseFloat(savingsRate.value);
+
+  if (Number.isNaN(hours) || Number.isNaN(rate)) {
+    savingsTotal.textContent = 'Enter both numbers';
+    return;
+  }
+
+  if (hours < 0 || rate < 0 || hours > 168) {
+    savingsTotal.textContent = 'Check the numbers';
+    return;
+  }
+
+  savingsTotal.textContent = `${currency.format((hours * rate * 52) / 12)} per month`;
+}
+
+savingsHours?.addEventListener('input', updateSavings);
+savingsRate?.addEventListener('input', updateSavings);
 
 const homeBlogGrid = document.querySelector('[data-home-blog]');
 
@@ -88,7 +122,8 @@ function createHomeBlogCard(post, index) {
   const body = createElement('div', 'home-blog-body');
   const meta = createElement('div', 'home-blog-meta');
   meta.append(
-    createElement('span', '', post.category),
+    // Same folded labels the /blog/ pages show, for bundled and Supabase rows alike.
+    createElement('span', '', groupCategory(post.category)),
     createElement('time', '', formatBlogDate(post.published))
   );
 
@@ -259,11 +294,12 @@ if ('IntersectionObserver' in window) {
   linkedSections.forEach((section) => sectionObserver.observe(section));
 }
 
-window.addEventListener('scroll', () => {
+function updateNavigation() {
   document.body.classList.toggle('scrolled', window.scrollY > 34);
-});
+}
 
-document.body.classList.toggle('scrolled', window.scrollY > 34);
+updateNavigation();
+window.addEventListener('scroll', updateNavigation, { passive: true });
 
 setSolution(activeSolution);
 initializeNavMenu();
