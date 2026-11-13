@@ -65,7 +65,6 @@ Production needs none of this; all env vars are set in Netlify.
 | Blog email signup | `[data-blog-signup]` forms (`src/article.js`) post `kind: 'signup'` to `/api/book-call`, which emails the owner. No list provider. |
 | Analytics | `src/analytics.js` (env-gated PostHog, US host, CDN-loaded, off on localhost) |
 | Shared nav | `src/nav.js` |
-| Vercel booking handler | `api/book-call.js`: unused on Netlify, kept for a possible future Vercel move |
 | Schema | `supabase/schema.sql`, `supabase/README.md` |
 | Assets | `public/` (favicon, og-cover, workflow demo preview, `founder.jpg`, `LogicFolds_Credentials.pdf`, self-hosted `fonts/`) |
 | Capabilities PDF | `python3 scripts/build-credentials.py` (needs `reportlab` only) writes `public/LogicFolds_Credentials.pdf`; the nav item is called "Capabilities" |
